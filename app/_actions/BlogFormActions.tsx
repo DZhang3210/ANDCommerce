@@ -80,6 +80,7 @@ export async function editBlogPost(prevState: unknown, formData: FormData) {
         })
         console.log('Blog post updated:', newPost)
         revalidatePath(`/post/${unvalidatedData.id}`)
+        revalidatePath("/")
     } catch (error) {
         console.error('Error updating blog post:', error)
     }
