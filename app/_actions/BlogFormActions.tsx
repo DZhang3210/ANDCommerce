@@ -1,15 +1,29 @@
 'use server'
 
+import { authOptions } from '@/libs/authOptions'
 import prisma from '@/libs/db'
+import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
-import { z } from 'zod'
+import { notFound } from 'next/navigation'
+import { SafeParseError, z } from 'zod'
 
 const getSchema = z.object({
     title: z.string({ message: 'Title is required' }).min(4, 'Title must be at least 4 characters long'),  // Ensures a title is provided
     desc: z.string({ message: 'Desc is required' }).min(4, 'Description must be at least 4 characters long')
 })
 
+type addBlogPostReturn = {
+    title?: string,
+    desc?: string,
+    message?: string
+}
+
 export const addBlogPost = async (prevState: unknown, formData: FormData) => {
+    const session = await getServerSession(authOptions)
+    if (!session) return notFound()
+    const user = await prisma.user.findUnique({ where: { email: session?.user?.email as string } })
+    if (!user) return notFound()
+
     // Convert FormData to a plain object
     const unvalidatedData = {
         title: formData.get("title"),
@@ -22,7 +36,6 @@ export const addBlogPost = async (prevState: unknown, formData: FormData) => {
     // Check if validation succeeded
     if (result.success === false) {
         console.log("Failed", result.error.formErrors.fieldErrors)
-        console.log("Hello")
         return result.error.formErrors.fieldErrors
     }
 
@@ -31,7 +44,8 @@ export const addBlogPost = async (prevState: unknown, formData: FormData) => {
         const newPost = await prisma.post.create({
             data: {
                 title: unvalidatedData.title,
-                desc: unvalidatedData.desc
+                desc: unvalidatedData.desc,
+                userId: user?.id
             }
         })
         console.log('Blog post created:', newPost)
@@ -65,7 +79,7 @@ export async function editBlogPost(prevState: unknown, formData: FormData) {
 
     // Check if validation succeeded
     if (result.success === false) {
-        console.log("Failure")
+        console.log("Failure to parse, zod errros")
         return result.error.formErrors.fieldErrors
     }
 

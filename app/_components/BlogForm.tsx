@@ -14,7 +14,6 @@ function wait(duration: number) {
 
 const BlogForm = ({ id, desc, title }: { id?: string, desc?: string, title?: string }) => {
     const [error, action] = useFormState((id && desc && title) ? editBlogPost : addBlogPost, {})
-    console.log("Blog Form", { id, desc, title })
 
     return (
         <>
