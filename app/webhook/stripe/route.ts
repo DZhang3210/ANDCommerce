@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import Stripe from "stripe";
 import ConfirmEmail from "@/emails/ConfirmEmail";
+import prisma from "@/libs/db";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 const resend = new Resend(process.env.RESEND_API_KEY as string);
@@ -22,6 +23,15 @@ export async function POST(req: NextRequest) {
     if (!email) {
       return new NextResponse();
     }
+
+    prisma.order.create({
+      data: {
+        pricePaidInCents: pricePaidInCents,
+        productId: charge.metadata.productID,
+        userId: charge.metadata.userID,
+      },
+    });
+
     console.log("THREE");
     await resend.emails.send({
       from: `Support <${process.env.SENDER_EMAIL}>`,

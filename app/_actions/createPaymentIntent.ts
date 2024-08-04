@@ -3,13 +3,22 @@ import { NextRequest, NextResponse } from "next/server";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-export async function createPaymentIntent({ amount }: { amount: number }) {
+type createPaymentIntentProps = {
+  amount: number;
+  productID: string;
+};
+
+export async function createPaymentIntent({
+  amount,
+  productID,
+}: createPaymentIntentProps) {
   console.log("amount", amount);
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
       currency: "usd",
       automatic_payment_methods: { enabled: true },
+      metadata: { productID },
     });
 
     return { clientSecret: paymentIntent.client_secret };
