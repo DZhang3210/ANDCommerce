@@ -42,6 +42,8 @@ const UserTable = ({ users }: UserTableProps) => {
         <TableBody>
           {users.map((user: UserType) => (
             <UserRow
+              key={user.id}
+              id={user.id}
               name={user.name || "(no name)"}
               email={user.email}
               isAdmin={user.isAdmin}
@@ -55,12 +57,13 @@ const UserTable = ({ users }: UserTableProps) => {
 };
 
 type UserRowProps = {
+  id: string;
   name: string;
   email: string;
   isAdmin: boolean;
   count: number;
 };
-export const UserRow = ({ name, email, isAdmin, count }: UserRowProps) => {
+export const UserRow = ({ id, name, email, isAdmin, count }: UserRowProps) => {
   return (
     <TableRow>
       <TableCell>{name}</TableCell>
@@ -68,7 +71,7 @@ export const UserRow = ({ name, email, isAdmin, count }: UserRowProps) => {
       <TableCell>{isAdmin}</TableCell>
       <TableCell>{count}</TableCell>
       <TableCell>
-        <UserSideBar />
+        <UserSideBar id={id} />
       </TableCell>
     </TableRow>
   );

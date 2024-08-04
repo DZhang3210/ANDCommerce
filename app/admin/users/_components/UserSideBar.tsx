@@ -1,24 +1,30 @@
 import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-} from "@/components/ui/menubar";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 import { MenubarTrigger } from "@radix-ui/react-menubar";
+import { EllipsisVertical } from "lucide-react";
 import React from "react";
+import DeleteButton from "./DeleteButton";
 
-const UserSideBar = () => {
+const UserSideBar = ({ id }: { id: string }) => {
   return (
-    <Menubar>
-      <MenubarMenu>
-        <MenubarTrigger></MenubarTrigger>
-
-        <MenubarContent>
-          <MenubarItem>View Profile</MenubarItem>
-          <MenubarItem>Delete</MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
-    </Menubar>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <EllipsisVertical />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>View</DropdownMenuItem>
+        <DeleteButton id={id} />
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

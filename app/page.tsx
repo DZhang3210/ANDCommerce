@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Feed from "./_components/Feed";
 import prisma from "@/libs/db";
-import BlogForm from "./_components/BlogForm";
+import ProductForm from "./_components/ProductForm";
 
 export default async function Home() {
   const results = await prisma.product.findMany({
@@ -9,6 +9,7 @@ export default async function Home() {
       id: true,
       title: true,
       desc: true,
+      pricePaidInCents: true,
       owner: {
         select: {
           name: true,
@@ -20,10 +21,10 @@ export default async function Home() {
   });
   return (
     <div className="container mt-10">
-      <h1 className="text-4xl">Blog Posts</h1>
+      <h1 className="text-4xl">Products</h1>
       <Feed results={results} />
-      <div>Make a brand new blog post</div>
-      <BlogForm />
+      <div>Create a product</div>
+      <ProductForm />
     </div>
   );
 }

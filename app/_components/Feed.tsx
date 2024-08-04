@@ -15,6 +15,7 @@ type FeedProps = {
   id: string;
   title: string;
   desc: string;
+  pricePaidInCents: number;
   owner: {
     name: string | null;
     image: string | null;
@@ -30,6 +31,7 @@ const Feed = ({ results }: { results: FeedProps }) => {
           id={result.id}
           title={result.title}
           desc={result.desc}
+          pricePaidInCents={result.pricePaidInCents}
           username={result.owner?.name}
           image={result.owner?.image}
           userId={result.owner?.id}
@@ -46,6 +48,7 @@ type BlogCardProps = {
   username: string | null | undefined;
   image: string | null | undefined;
   userId: string | null | undefined;
+  pricePaidInCents: number;
 };
 
 const BlogCard = ({
@@ -55,6 +58,7 @@ const BlogCard = ({
   username,
   image,
   userId,
+  pricePaidInCents,
 }: BlogCardProps) => {
   return (
     <Card>
@@ -63,6 +67,7 @@ const BlogCard = ({
       </CardHeader>
       <CardContent>
         <p>{desc}</p>
+        <p>Price: {pricePaidInCents}</p>
         <p>Creator: {username}</p>
         {image && (
           <Link href={`/profile/${userId}/panel`}>
@@ -79,6 +84,9 @@ const BlogCard = ({
         <DeleteButton id={id} />
         <Button asChild>
           <Link href={`/post/${id}`}>Edit</Link>
+        </Button>
+        <Button variant={"outline"}>
+          <Link href={`/payment/${id}`}>Buy</Link>
         </Button>
       </CardFooter>
     </Card>
