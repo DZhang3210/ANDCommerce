@@ -4,6 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
 import { CheckoutForm } from "./CheckoutForm";
+import { useSession } from "next-auth/react";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string
 );
@@ -17,8 +18,9 @@ type CheckoutWrapperProps = {
     updatedAt: Date;
     ownerID: string | null;
   };
+  userID: string;
 };
-const CheckoutWrapper = ({ product }: CheckoutWrapperProps) => {
+const CheckoutWrapper = ({ product, userID }: CheckoutWrapperProps) => {
   return (
     <Elements
       stripe={stripePromise}
@@ -28,7 +30,7 @@ const CheckoutWrapper = ({ product }: CheckoutWrapperProps) => {
         currency: "usd",
       }}
     >
-      <CheckoutForm product={product} />
+      <CheckoutForm product={product} userID={userID} />
     </Elements>
   );
 };

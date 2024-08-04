@@ -1,6 +1,6 @@
 import ProductForm from "@/app/_components/ProductForm";
-import authOptions from "@/libs/authOptions";
-import prisma from "@/libs/db";
+import { authOptions } from "@/lib/authOptions";
+import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";

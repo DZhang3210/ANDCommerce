@@ -1,4 +1,4 @@
-import prisma from "@/libs/db";
+import prisma from "@/lib/db";
 import React from "react";
 import OrderTable from "./_components/OrderTable";
 

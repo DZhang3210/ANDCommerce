@@ -8,46 +8,42 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import React from "react";
-import OrderSideBar from "./OrderSideBar";
 
 type OrderType = {
   id: string;
   pricePaidInCents: number;
   createdAt: Date;
-  User: {
+  product: {
     id: string;
-    name: string | null;
-    email: string;
+    title: string;
   };
 };
 
-type OrderTableProps = {
+type ProfileOrderTableProps = {
   orders: OrderType[];
 };
 
-const OrderTable = ({ orders }: OrderTableProps) => {
+const ProfileOrderTable = ({ orders }: ProfileOrderTableProps) => {
   return (
     <div className="container">
       <Table>
-        <TableCaption>A list of current orders</TableCaption>
+        <TableCaption>A list of all your orders</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>ID</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Created At</TableHead>
-            <TableHead>UserName</TableHead>
-            <TableHead>UserEmail</TableHead>
-            <TableHead>Options</TableHead>
+            <TableHead>productTitle</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {orders.map((order) => (
             <OrderRow
+              key={order.id}
               id={order.id}
               pricePaidInCents={order.pricePaidInCents}
               createdAt={order.createdAt}
-              userName={order.User.name || "(no name)"}
-              userEmail={order.User.email}
+              productName={order.product.title || "(no name)"}
             />
           ))}
         </TableBody>
@@ -60,29 +56,23 @@ type OrderRowProps = {
   id: string;
   pricePaidInCents: number;
   createdAt: Date;
-  userName: string;
-  userEmail: string;
+  productName: string;
 };
 
 export const OrderRow = ({
   id,
   pricePaidInCents,
   createdAt,
-  userName,
-  userEmail,
+  productName,
 }: OrderRowProps) => {
   return (
     <TableRow>
       <TableCell>{id}</TableCell>
       <TableCell>{pricePaidInCents}</TableCell>
       <TableCell>{createdAt.toLocaleDateString("en-US")}</TableCell>
-      <TableCell>{userName}</TableCell>
-      <TableCell>{userEmail}</TableCell>
-      <TableCell>
-        <OrderSideBar id={id} />
-      </TableCell>
+      <TableCell>{productName}</TableCell>
     </TableRow>
   );
 };
 
-export default OrderTable;
+export default ProfileOrderTable;

@@ -12,14 +12,21 @@ export const authOptions = {
     }),
   ],
   adapter: PrismaAdapter(prisma),
-  callbacks: {
-    async session({ session, token, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-      }
-      return session; // Fix: Ensure return is inside the session function
-    },
-  },
+  // callbacks: {
+  //   session: async ({ session, token }) => {
+  //     if (session?.user) {
+  //       session.user.id = token.sub;
+  //     }
+  //     return session;
+  //   },
+  //   jwt: async ({ user, token }) => {
+  //     if (user) {
+  //       token.uid = user.id;
+  //     }
+  //     return token;
+  //   },
+  // },
+  // session: {
+  //   strategy: "jwt",
+  // },
 };
-
-export default NextAuth(authOptions);

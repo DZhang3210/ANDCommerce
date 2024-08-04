@@ -33,9 +33,10 @@ type CheckoutFormProps = {
     updatedAt: Date;
     ownerID: string | null;
   };
+  userID: string;
 };
 
-export function CheckoutForm({ product }: CheckoutFormProps) {
+export function CheckoutForm({ product, userID }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -48,6 +49,7 @@ export function CheckoutForm({ product }: CheckoutFormProps) {
       const clientSecret = (
         await createPaymentIntent({
           productID: product.id,
+          userID: userID,
           amount: product.pricePaidInCents,
         })
       )?.clientSecret;

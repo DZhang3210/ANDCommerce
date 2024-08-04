@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/libs/db";
+import prisma from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
 export async function deleteUser({ id }: { id: string }) {

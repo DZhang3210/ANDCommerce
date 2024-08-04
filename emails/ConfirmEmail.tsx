@@ -1,3 +1,4 @@
+import { Order, Product, User } from "@prisma/client";
 import {
   Body,
   Column,
@@ -5,6 +6,7 @@ import {
   Head,
   Heading,
   Html,
+  Img,
   Preview,
   Row,
   Section,
@@ -12,7 +14,16 @@ import {
   Text,
 } from "@react-email/components";
 
-export default function ConfirmEmail() {
+type ConfirmEmailProps = {
+  order: Order;
+  product: Product;
+  user: User;
+};
+export default function ConfirmEmail({
+  order,
+  product,
+  user,
+}: ConfirmEmailProps) {
   return (
     <Html>
       <Preview>Test Button</Preview>
@@ -26,15 +37,21 @@ export default function ConfirmEmail() {
               <Row>
                 <Column>
                   <Text>Product</Text>
-                  <Text>9.99</Text>
+                  <Text>{product.title}</Text>
                 </Column>
                 <Column>
                   <Text>Price</Text>
-                  <Text>14.99</Text>
+                  <Text>{product.pricePaidInCents}</Text>
                 </Column>
                 <Column>
                   <Text>Date</Text>
-                  <Text>14.99</Text>
+                  <Text>
+                    {order.createdAt.toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </Text>
                 </Column>
               </Row>
             </Section>

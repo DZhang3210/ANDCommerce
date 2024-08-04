@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Feed from "./_components/Feed";
-import prisma from "@/libs/db";
+import prisma from "@/lib/db";
 import ProductForm from "./_components/ProductForm";
 
 export default async function Home() {
