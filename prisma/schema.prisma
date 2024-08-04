@@ -16,14 +16,25 @@ datasource db {
   directUrl = env("POSTGRES_ADV_URL_NON_POOLING") // uses a direct connection
 }
 
-model Post {
+model Product {
   id        String   @id @default(uuid())
   title     String
   desc      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+  owner     User?    @relation(fields: [ownerID], references: [id], onDelete: Restrict)
+  ownerID   String?
+  orders    Order[]
+}
+
+model Order {
+  id               String   @id @default(uuid())
+  pricePaidInCents Int
+  createdAt        DateTime @default(now())
+  User             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String
+  product          Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  productId        String
 }
 
 model User {
@@ -32,14 +43,16 @@ model User {
   email         String          @unique
   emailVerified DateTime?
   image         String?
+  isAdmin       Boolean         @default(false)
   accounts      Account[]
   sessions      Session[]
-  posts         Post[]
+  orders        Order[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
 }
 
 model Account {
