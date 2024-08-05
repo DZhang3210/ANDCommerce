@@ -34,7 +34,7 @@ model Order {
   createdAt        DateTime @default(now())
   User             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId           String
-  product          Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  product          Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId        String
 }
 

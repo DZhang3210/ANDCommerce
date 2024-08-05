@@ -31,9 +31,9 @@ const ProfileOrderTable = ({ orders }: ProfileOrderTableProps) => {
         <TableHeader>
           <TableRow>
             <TableHead>ID</TableHead>
+            <TableHead>Product Title</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Created At</TableHead>
-            <TableHead>productTitle</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -68,9 +68,9 @@ export const OrderRow = ({
   return (
     <TableRow>
       <TableCell>{id}</TableCell>
+      <TableCell>{productName}</TableCell>
       <TableCell>{pricePaidInCents}</TableCell>
       <TableCell>{createdAt.toLocaleDateString("en-US")}</TableCell>
-      <TableCell>{productName}</TableCell>
     </TableRow>
   );
 };

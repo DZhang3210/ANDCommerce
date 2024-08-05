@@ -1,11 +1,11 @@
 import Image from "next/image";
-import Feed from "./_components/Feed";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
-import SearchBar from "./_components/SearchBar";
+import SearchBar from "../_components/SearchBar";
+import Feed from "../_components/Feed";
 
-export default async function Home() {
+export default async function BlankSearchPage() {
   const results = await prisma.product.findMany({
     select: {
       id: true,
@@ -23,7 +23,6 @@ export default async function Home() {
     },
   });
   const session = await getServerSession(authOptions);
-  console.log("SESSION", session);
   return (
     <div className="container mt-10">
       <SearchBar />

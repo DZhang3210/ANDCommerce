@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { useEffect, useTransition } from "react";
+import React, { FormEvent, useEffect, useTransition } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { addProduct, editProduct } from "../_actions/BlogFormActions";
 
@@ -28,7 +28,6 @@ const ProductForm = ({
     id && desc && title ? editProduct : addProduct,
     {}
   );
-
   return (
     <>
       <form action={action}>
@@ -49,7 +48,7 @@ const ProductForm = ({
           defaultValue={desc || ""}
           required
         ></Input>
-        <Label htmlFor="price">Price</Label>
+        <Label htmlFor="price">Price In Cents</Label>
         <Input
           type="number"
           id="price"

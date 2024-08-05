@@ -4,7 +4,8 @@ import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 import { SafeParseError, z } from "zod";
 
 const getSchema = z.object({
@@ -59,6 +60,7 @@ export const addProduct = async (prevState: unknown, formData: FormData) => {
   } catch (error) {
     console.error("Error creating Product:", error);
   }
+  redirect("/");
 };
 
 export async function deleteProduct({ id }: { id: string }) {
@@ -113,4 +115,5 @@ export async function editProduct(
   } catch (error) {
     console.error("Error updating Product:", error);
   }
+  redirect("/");
 }

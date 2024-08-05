@@ -11,7 +11,7 @@ const EditPage = async ({ params: { id } }: { params: { id: string } }) => {
     redirect("/");
   }
   return (
-    <>
+    <div className="container">
       <div>Edit your blog post</div>
       <ProductForm
         id={id}
@@ -19,7 +19,7 @@ const EditPage = async ({ params: { id } }: { params: { id: string } }) => {
         title={post.title}
         pricePaidInCents={post.pricePaidInCents}
       />
-    </>
+    </div>
   );
 };
 

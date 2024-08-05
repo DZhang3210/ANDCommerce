@@ -10,31 +10,42 @@ import React from "react";
 import DeleteButton from "./DeleteButton";
 import Link from "next/link";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
 type FeedProps = {
-  id: string;
-  title: string;
-  desc: string;
-  pricePaidInCents: number;
-  owner: {
-    name: string | null;
-    image: string | null;
-    id: string | null;
-  } | null;
-}[];
-const Feed = ({ results }: { results: FeedProps }) => {
+  results: {
+    id: string;
+    title: string;
+    desc: string;
+    pricePaidInCents: number;
+    owner: {
+      name: string | null;
+      image: string | null;
+      id: string | null;
+      email: string;
+    } | null;
+  }[];
+  session: Session | null;
+  removeUser?: boolean;
+};
+const Feed = ({ results, session, removeUser }: FeedProps) => {
+  console.log("result");
   return (
-    <div>
+    <div className="grid grid-cols-3 gap-10 my-10">
       {results.map((result) => (
         <BlogCard
           key={result.id}
+          isOwner={result.owner?.email === session?.user?.email}
           id={result.id}
           title={result.title}
+          email={result?.owner?.email || ""}
           desc={result.desc}
           pricePaidInCents={result.pricePaidInCents}
           username={result.owner?.name}
           image={result.owner?.image}
           userId={result.owner?.id}
+          removeUser={removeUser}
         />
       ))}
     </div>
@@ -43,21 +54,27 @@ const Feed = ({ results }: { results: FeedProps }) => {
 
 type BlogCardProps = {
   id: string;
+  isOwner: boolean;
   title: string;
   desc: string;
+  email: string;
   username: string | null | undefined;
   image: string | null | undefined;
   userId: string | null | undefined;
   pricePaidInCents: number;
+  removeUser?: boolean;
 };
 
 const BlogCard = ({
   id,
+  isOwner,
   title,
   desc,
   username,
   image,
+  email,
   userId,
+  removeUser = false,
   pricePaidInCents,
 }: BlogCardProps) => {
   return (
@@ -67,27 +84,40 @@ const BlogCard = ({
       </CardHeader>
       <CardContent>
         <p>{desc}</p>
-        <p>Price: {pricePaidInCents}</p>
-        <p>Creator: {username}</p>
-        {image && (
-          <Link href={`/profile/${userId}/panel`}>
-            <Image
-              src={image}
-              alt={`${title} Image`}
-              width={40}
-              height={40}
-            ></Image>
-          </Link>
+        <p>Price: ${pricePaidInCents / 100}</p>
+        {!removeUser && (
+          <>
+            <hr className="my-2" />
+            <p>Creator: {username}</p>
+            {image && (
+              <Link href={`/profile/${email}/panel`}>
+                <Image
+                  src={image}
+                  alt={`${title} Image`}
+                  width={40}
+                  height={40}
+                ></Image>
+              </Link>
+            )}
+          </>
         )}
       </CardContent>
       <CardFooter className="space-x-2">
-        <DeleteButton id={id} />
-        <Button asChild>
-          <Link href={`/post/${id}`}>Edit</Link>
-        </Button>
-        <Button variant={"outline"}>
-          <Link href={`/payment/${id}`}>Buy</Link>
-        </Button>
+        {isOwner && (
+          <>
+            <DeleteButton id={id} />
+            <Button asChild>
+              <Link href={`/product/${id}`}>Edit</Link>
+            </Button>
+          </>
+        )}
+        {!isOwner && (
+          <>
+            <Button variant={"outline"}>
+              <Link href={`/payment/${id}`}>Buy</Link>
+            </Button>
+          </>
+        )}
       </CardFooter>
     </Card>
   );
