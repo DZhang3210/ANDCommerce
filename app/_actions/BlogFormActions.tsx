@@ -1,11 +1,13 @@
 "use server";
 
+import ProductCreationEmail from "@/email/ProductCreationEmail";
 import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { notFound, redirect } from "next/navigation";
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 import { SafeParseError, z } from "zod";
 
 const getSchema = z.object({
@@ -60,6 +62,19 @@ export const addProduct = async (prevState: unknown, formData: FormData) => {
   } catch (error) {
     console.error("Error creating Product:", error);
   }
+  const emailProduct = {
+    name: unvalidatedData.title,
+    description: unvalidatedData.desc,
+    price: Number(unvalidatedData.price),
+  };
+  const resend = new Resend(process.env.RESEND_API_KEY as string);
+  await resend.emails.send({
+    from: `Support <${process.env.SENDER_EMAIL}>`,
+    to: user?.email,
+    subject: "Order Confirmation",
+    react: ProductCreationEmail({ product: emailProduct }),
+  });
+
   redirect("/");
 };
 

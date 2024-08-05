@@ -6,6 +6,7 @@ import Nav from "./_components/Nav";
 import Provider from "./_components/Provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
+import prisma from "@/lib/db";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,12 +21,22 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession(authOptions);
-  console.log("LAYOUT", session);
+  let isAdmin = false;
+  if (session && session?.user?.email) {
+    isAdmin =
+      (
+        await prisma.user.findUnique({
+          where: { email: session?.user?.email },
+          select: { isAdmin: true },
+        })
+      )?.isAdmin || false;
+  }
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <Provider session={session}>
-          <Nav />
+          <Nav session={session} isAdmin={isAdmin} />
           <div className="mt-32">{children}</div>
         </Provider>
       </body>

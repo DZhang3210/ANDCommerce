@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import Stripe from "stripe";
-import ConfirmEmail from "@/emails/ConfirmEmail";
+import ConfirmEmail from "@/email/ConfirmEmail";
 import prisma from "@/lib/db";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);

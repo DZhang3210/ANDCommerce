@@ -28,6 +28,7 @@ type UserTableProps = {
 const UserTable = ({ users }: UserTableProps) => {
   return (
     <div className="container">
+      <div className="text-4xl font-semibold">Users</div>
       <Table>
         <TableCaption>A list of current users</TableCaption>
         <TableHeader>

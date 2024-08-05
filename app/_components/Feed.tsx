@@ -30,7 +30,9 @@ type FeedProps = {
   removeUser?: boolean;
 };
 const Feed = ({ results, session, removeUser }: FeedProps) => {
-  console.log("result");
+  // console.log("result", results);
+  // console.log("session", session);
+  // console.log("HERE", session ? results[0].owner?.id : null);
   return (
     <div className="grid grid-cols-3 gap-10 my-10">
       {results.map((result) => (
@@ -44,7 +46,7 @@ const Feed = ({ results, session, removeUser }: FeedProps) => {
           pricePaidInCents={result.pricePaidInCents}
           username={result.owner?.name}
           image={result.owner?.image}
-          userId={result.owner?.id}
+          userId={session ? result.owner?.id : null}
           removeUser={removeUser}
         />
       ))}
@@ -111,7 +113,7 @@ const BlogCard = ({
             </Button>
           </>
         )}
-        {!isOwner && (
+        {userId !== null && !isOwner && (
           <>
             <Button variant={"outline"}>
               <Link href={`/payment/${id}`}>Buy</Link>

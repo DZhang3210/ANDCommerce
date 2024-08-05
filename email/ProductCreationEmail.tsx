@@ -15,16 +15,23 @@ type Product = {
   name: string;
   description: string;
   price: number;
-  imageUrl: string;
 };
 
 type ProductCreationEmailProps = {
   product: Product;
 };
 
-export const ProductCreationEmail: React.FC<ProductCreationEmailProps> = ({
+ProductCreationEmail.PreviewProps = {
+  product: {
+    name: "David",
+    description: "Zhang",
+    price: 100,
+  },
+} satisfies ProductCreationEmailProps;
+
+export default function ProductCreationEmail({
   product,
-}) => {
+}: ProductCreationEmailProps) {
   return (
     <Html>
       <Head />
@@ -39,11 +46,11 @@ export const ProductCreationEmail: React.FC<ProductCreationEmailProps> = ({
               We're excited to announce a new addition to our catalog:
             </Text>
 
-            <Img
+            {/* <Img
               src={product.imageUrl}
               alt={product.name}
               className="w-full h-auto rounded-lg mb-6"
-            />
+            /> */}
 
             <Heading
               as="h2"
@@ -56,7 +63,7 @@ export const ProductCreationEmail: React.FC<ProductCreationEmailProps> = ({
               {product.description}
             </Text>
 
-            <Text className="text-lg font-medium text-blue-600 mb-4">
+            <Text className="text-lg font-medium mb-4">
               Price: ${product.price.toFixed(2)}
             </Text>
 
@@ -68,4 +75,4 @@ export const ProductCreationEmail: React.FC<ProductCreationEmailProps> = ({
       </Tailwind>
     </Html>
   );
-};
+}

@@ -28,6 +28,7 @@ type OrderTableProps = {
 const OrderTable = ({ orders }: OrderTableProps) => {
   return (
     <div className="container">
+      <div className="text-4xl font-semibold">Orders</div>
       <Table>
         <TableCaption>A list of current orders</TableCaption>
         <TableHeader>

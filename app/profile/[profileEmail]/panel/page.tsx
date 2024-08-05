@@ -63,7 +63,7 @@ const ProfilePanel = async ({
     <div className="container">
       <div className="flex gap-10">
         {userWithOrders?.image && (
-          <div className="rounded-full overflow-hidden aspect-square w-1/4 mb-5">
+          <div className="rounded-full overflow-hidden aspect-square w-1/4 mb-10">
             <Image
               src={userWithOrders?.image}
               alt="user-profile"
@@ -73,20 +73,28 @@ const ProfilePanel = async ({
           </div>
         )}
         <div className="text-4xl">
-          <div className="mt-20">{userWithOrders?.name}</div>
-          <div className="text-gray-500 text-[1rem] indent-2">
+          <div className="mt-20 font-semibold">{userWithOrders?.name}</div>
+          <div className="text-gray-500 text-[1rem] indent-2 italic">
             @{decodedURI}
           </div>
         </div>
       </div>
-      <h1 className="text-4xl ml-5">Products</h1>
-      <Feed results={products} session={session} removeUser={true} />
-      {session && session.user?.email === decodedURI && (
-        <>
-          <h1 className="text-4xl ml-5">Orders</h1>
-          <ProfileOrderTable orders={orders} />
-        </>
-      )}
+      <div className="mb-10 font-semibold">
+        <h1 className="text-4xl ml-5">Products</h1>
+        <Feed results={products} session={session} removeUser={true} />
+      </div>
+      <div className="mb-10">
+        {session && session.user?.email === decodedURI && (
+          <>
+            <h1 className="text-4xl ml-5 font-semibold">Orders</h1>
+            {orders.length !== 0 ? (
+              <ProfileOrderTable orders={orders} />
+            ) : (
+              <div className="mt-5">You don't have any orders....</div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

@@ -8,14 +8,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import prisma from "@/lib/db";
+import { Session } from "next-auth";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const Nav = () => {
-  const { data: session, status } = useSession();
+type NavProps = {
+  session?: Session | null;
+  isAdmin?: boolean;
+};
 
+const Nav = ({ session, isAdmin }: NavProps) => {
+  console.log("Session", session);
+  console.log("isAdmin", isAdmin);
   return (
     <div className="fixed top-0 left-0 right-0 h-[5rem] bg-slate-500 flex gap-10 items-center text-4xl justify-around z-[100]">
       <div className="space-x-10">
@@ -55,6 +62,11 @@ const Nav = () => {
                       Profile
                     </Link>
                   </DropdownMenuItem>
+                  {isAdmin && (
+                    <DropdownMenuItem>
+                      <Link href={`/admin`}>Admin</Link>
+                    </DropdownMenuItem>
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (

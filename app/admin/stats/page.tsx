@@ -12,15 +12,20 @@ import Link from "next/link";
 import React from "react";
 
 const StatsPage = async () => {
-  const [users, orders] = await Promise.all([
+  const [users, orders, orderAggregate] = await Promise.all([
     prisma.user.findMany(),
-    prisma.product.findMany({
-      select: { _count: true },
+    prisma.order.findMany(),
+    prisma.order.aggregate({
+      _sum: { pricePaidInCents: true },
     }),
   ]);
-  const [userCount, orderCount] = [users.length, orders.length];
+  const [userCount, orderCount, orderSum] = [
+    users.length,
+    orders.length,
+    orderAggregate._sum.pricePaidInCents,
+  ];
   return (
-    <div className="container grid grid-cols-2">
+    <div className="container grid grid-cols-2 gap-5">
       <StatsCard
         title="Total Users"
         desc="Number of users using site"
@@ -34,6 +39,14 @@ const StatsPage = async () => {
         desc="Number of orders placed"
         number={orderCount}
         units="orders"
+        linkName="orders"
+        link="/admin/orders"
+      />
+      <StatsCard
+        title="Total Paid"
+        desc="Total Money Exchanged"
+        number={orderSum || -1}
+        units="dollars made"
         linkName="orders"
         link="/admin/orders"
       />
@@ -65,7 +78,7 @@ const StatsCard = ({
       </CardHeader>
       <CardContent>
         <p>
-          {number}&nbsp;{units}
+          {number ? number : "?"}&nbsp;{units}
         </p>
       </CardContent>
       <CardFooter>
