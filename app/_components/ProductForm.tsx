@@ -3,10 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { FormEvent, useEffect, useTransition } from "react";
+import React, { FormEvent, useEffect, useState, useTransition } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import { addProduct, editProduct } from "../_actions/BlogFormActions";
+import { addProduct, editProduct } from "../_actions/ProductFormActions";
 import ImageUpload from "./ImageUpload";
+import { Tag } from "@prisma/client";
 
 function wait(duration: number) {
   return new Promise((resolve) => setTimeout(resolve, duration));
@@ -18,6 +19,7 @@ type ProductFormProps = {
   title?: string;
   pricePaidInCents?: number;
   productImage?: string;
+  defaultTags?: Tag[];
 };
 
 const ProductForm = ({
@@ -26,11 +28,14 @@ const ProductForm = ({
   title,
   pricePaidInCents,
   productImage,
+  defaultTags,
 }: ProductFormProps) => {
   const [error, action] = useFormState(
     id && desc && title ? editProduct : addProduct,
     {}
   );
+  const [tags, setTags] = useState<Tag[]>(defaultTags || []);
+
   return (
     <>
       <form action={action}>
@@ -48,7 +53,6 @@ const ProductForm = ({
               <div className="text-destructive">{error?.title}</div>
             )}
             <Label htmlFor="desc">Desc</Label>
-
             <textarea
               id="desc"
               name="desc"
@@ -68,6 +72,12 @@ const ProductForm = ({
             {error?.desc && (
               <div className="text-destructive">{error?.desc}</div>
             )}
+            <Label htmlFor="tags">Tags</Label>
+            <div className="flex gap-1">
+              <Input type="text" placeholder="tags"></Input>
+              <Button variant="outline">Add Tag</Button>
+            </div>
+
             {id && (
               <input className="hidden" name="id" readOnly value={id}></input>
             )}

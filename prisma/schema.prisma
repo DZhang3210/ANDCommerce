@@ -27,6 +27,14 @@ model Product {
   owner            User?    @relation(fields: [ownerID], references: [id], onDelete: Cascade)
   ownerID          String?
   orders           Order[]
+  tags             Tag[]
+  tagId            String?
+}
+
+model Tag {
+  id       String    @id @default(uuid())
+  title    String    @unique
+  products Product[]
 }
 
 model Order {
