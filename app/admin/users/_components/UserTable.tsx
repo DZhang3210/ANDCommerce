@@ -72,7 +72,7 @@ export const UserRow = ({ id, name, email, isAdmin, count }: UserRowProps) => {
       <TableCell>{isAdmin}</TableCell>
       <TableCell>{count}</TableCell>
       <TableCell>
-        <UserSideBar id={id} />
+        <UserSideBar id={id} email={email} />
       </TableCell>
     </TableRow>
   );

@@ -11,8 +11,14 @@ import { MenubarTrigger } from "@radix-ui/react-menubar";
 import { EllipsisVertical } from "lucide-react";
 import React from "react";
 import DeleteButton from "./DeleteButton";
+import Link from "next/link";
 
-const UserSideBar = ({ id }: { id: string }) => {
+type UserSideBarProps = {
+  id: string;
+  email: string;
+};
+
+const UserSideBar = ({ id, email }: UserSideBarProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -21,7 +27,9 @@ const UserSideBar = ({ id }: { id: string }) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>View</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={`/profile/${email}/panel`}>View</Link>
+        </DropdownMenuItem>
         <DeleteButton id={id} />
       </DropdownMenuContent>
     </DropdownMenu>
