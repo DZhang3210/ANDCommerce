@@ -104,7 +104,7 @@ export function CheckoutForm({ product, userID }: CheckoutFormProps) {
       <div className="mt-4">
         <LinkAuthenticationElement />
       </div>
-      <Button>Submit Payment</Button>
+      <Button className="mt-5 w-full">Submit Payment</Button>
     </form>
   );
 }

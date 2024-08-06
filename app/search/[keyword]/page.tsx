@@ -19,20 +19,20 @@ export default async function SearchPage({
       OR: [
         {
           title: {
-            contains: keyword,
+            contains: decodeURIComponent(keyword),
             mode: "insensitive", // Case-insensitive search
           },
         },
         {
           desc: {
-            contains: keyword,
+            contains: decodeURIComponent(keyword),
             mode: "insensitive", // Case-insensitive search
           },
         },
         {
           owner: {
             name: {
-              contains: keyword,
+              contains: decodeURIComponent(keyword),
               mode: "insensitive", // Case-insensitive search
             },
           },
@@ -44,6 +44,7 @@ export default async function SearchPage({
       title: true,
       desc: true,
       pricePaidInCents: true,
+      productImage: true,
       owner: {
         select: {
           name: true,
@@ -58,7 +59,7 @@ export default async function SearchPage({
   console.log("SESSION", session);
   return (
     <div className="container mt-10">
-      <SearchBar kWord={keyword} />
+      <SearchBar kWord={decodeURIComponent(keyword)} />
       <h1 className="text-4xl">Filter Products&nbsp;({results.length})</h1>
       <Feed results={results} session={session} />
     </div>

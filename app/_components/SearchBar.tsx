@@ -18,14 +18,14 @@ const SearchBar = ({ kWord }: SearchBarProps) => {
   };
 
   return (
-    <div className="flex w-1/2 my-4 text-xl items-center border rounded-full px-5 py-2">
+    <div className="flex w-1/2 my-6 text-xl items-center border rounded-full px-5 bg-white">
       <input
         type="text"
         placeholder="search.."
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="grow outline-none border-l-4 border-black pl-5"
+        className="grow outline-none border-l-4 border-black pl-5 my-4"
       />
       <Link href={`/search/${keyword}`}>
         <Search size={40} />

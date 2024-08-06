@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import prisma from "@/lib/db";
+import { Ampersand } from "lucide-react";
 import { Session } from "next-auth";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -24,15 +25,21 @@ const Nav = ({ session, isAdmin }: NavProps) => {
   console.log("Session", session);
   console.log("isAdmin", isAdmin);
   return (
-    <div className="fixed top-0 left-0 right-0 h-[5rem] bg-slate-500 flex gap-10 items-center text-4xl justify-around z-[100]">
-      <div className="space-x-10">
-        <Button asChild>
-          <Link href="/">Home</Link>
-        </Button>
-        <Button asChild variant="outline">
-          <Link href="/product/create">Create Product</Link>
-        </Button>
-      </div>
+    <div className="fixed top-0 left-0 right-0 h-[6rem] bg-slate-500 flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
+      <Link href="/" className="block">
+        <div className="flex items-center gap-1 font-semibold group">
+          <div>
+            <span className="text-white text-4xl font-bold group-hover:text-blue-800 transition">
+              AND
+            </span>
+            Commerce
+          </div>
+          <Ampersand
+            size={40}
+            className="transition group group-hover:scale-105 origin-center"
+          />
+        </div>
+      </Link>
 
       {!session ? (
         <Button asChild>
@@ -58,13 +65,18 @@ const Nav = ({ session, isAdmin }: NavProps) => {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Link href={`/profile/${session.user.email}/panel`}>
+                    <Link
+                      href={`/profile/${session.user.email}/panel`}
+                      className="w-full"
+                    >
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   {isAdmin && (
                     <DropdownMenuItem>
-                      <Link href={`/admin`}>Admin</Link>
+                      <Link href={`/admin`} className="w-full">
+                        Admin
+                      </Link>
                     </DropdownMenuItem>
                   )}
                 </DropdownMenuContent>
@@ -74,6 +86,11 @@ const Nav = ({ session, isAdmin }: NavProps) => {
             )}
           </div>
           <Button onClick={() => signOut()}>Log Out</Button>
+          <Button asChild variant="outline" className="px-10">
+            <Link href="/product/create" className="text-lg">
+              Create Product
+            </Link>
+          </Button>
         </div>
       )}
     </div>

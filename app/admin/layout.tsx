@@ -10,12 +10,9 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
+  console.log("FIND SESSION", session);
   if (!session) redirect("/");
-  const isAdmin = await prisma.user.findUnique({
-    where: { email: session.user?.email as string },
-    select: { isAdmin: true },
-  });
-  if (!isAdmin) redirect("/");
+  if (!session.user.isAdmin) redirect("/");
 
   return (
     <section>

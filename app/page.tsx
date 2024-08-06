@@ -12,6 +12,7 @@ export default async function Home() {
       title: true,
       desc: true,
       pricePaidInCents: true,
+      productImage: true,
       owner: {
         select: {
           name: true,
@@ -23,7 +24,7 @@ export default async function Home() {
     },
   });
   const session = await getServerSession(authOptions);
-  console.log("SESSION", session);
+  // console.log("SESSION", session);
   return (
     <div className="container mt-10">
       <SearchBar />

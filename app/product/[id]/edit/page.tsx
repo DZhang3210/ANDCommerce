@@ -18,6 +18,7 @@ const EditPage = async ({ params: { id } }: { params: { id: string } }) => {
         desc={post.desc}
         title={post.title}
         pricePaidInCents={post.pricePaidInCents}
+        productImage={post.productImage}
       />
     </div>
   );

@@ -67,3 +67,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  @apply bg-neutral-100 overflow-y-scroll;
+}

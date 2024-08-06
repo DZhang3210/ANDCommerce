@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -10,23 +11,36 @@ import React from "react";
 import DeleteButton from "./DeleteButton";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 
-type FeedProps = {
-  results: {
+type ResultProp = {
+  id: string;
+  title: string;
+  desc: string;
+  pricePaidInCents: number;
+  productImage: string;
+  owner: {
+    name: string | null;
+    image: string | null;
+    id: string | null;
+    email: string;
+  } | null;
+};
+
+type ExtendedSession = {
+  user: {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
     id: string;
-    title: string;
-    desc: string;
-    pricePaidInCents: number;
-    owner: {
-      name: string | null;
-      image: string | null;
-      id: string | null;
-      email: string;
-    } | null;
-  }[];
-  session: Session | null;
+    isAdmin: boolean;
+  };
+  expires: string;
+} | null;
+
+type FeedProps = {
+  results: ResultProp[];
+  session: ExtendedSession | null;
   removeUser?: boolean;
 };
 const Feed = ({ results, session, removeUser }: FeedProps) => {
@@ -34,20 +48,14 @@ const Feed = ({ results, session, removeUser }: FeedProps) => {
   // console.log("session", session);
   // console.log("HERE", session ? results[0].owner?.id : null);
   return (
-    <div className="grid grid-cols-3 gap-10 my-10">
+    <div className="grid grid-cols-4 gap-4 my-10">
       {results.map((result) => (
         <BlogCard
           key={result.id}
-          isOwner={result.owner?.email === session?.user?.email}
           id={result.id}
-          title={result.title}
-          email={result?.owner?.email || ""}
-          desc={result.desc}
-          pricePaidInCents={result.pricePaidInCents}
-          username={result.owner?.name}
-          image={result.owner?.image}
-          userId={session ? result.owner?.id : null}
+          product={result}
           removeUser={removeUser}
+          session={session}
         />
       ))}
     </div>
@@ -56,69 +64,71 @@ const Feed = ({ results, session, removeUser }: FeedProps) => {
 
 type BlogCardProps = {
   id: string;
-  isOwner: boolean;
-  title: string;
-  desc: string;
-  email: string;
-  username: string | null | undefined;
-  image: string | null | undefined;
-  userId: string | null | undefined;
-  pricePaidInCents: number;
-  removeUser?: boolean;
+  product: ResultProp;
+  removeUser: boolean | undefined;
+  session: ExtendedSession | null;
 };
 
-const BlogCard = ({
-  id,
-  isOwner,
-  title,
-  desc,
-  username,
-  image,
-  email,
-  userId,
-  removeUser = false,
-  pricePaidInCents,
-}: BlogCardProps) => {
+const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
+  const isOwner = session?.user?.id === product.owner?.id;
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p>{desc}</p>
-        <p>Price: ${pricePaidInCents / 100}</p>
-        {!removeUser && (
-          <>
-            <hr className="my-2" />
-            <p>Creator: {username}</p>
-            {image && (
-              <Link href={`/profile/${email}/panel`}>
-                <Image
-                  src={image}
-                  alt={`${title} Image`}
-                  width={40}
-                  height={40}
-                ></Image>
+    <Card className="m-0 p-0 transition hover:scale-105 border border-transparent hover:border-black">
+      <CardContent className="p-2">
+        {product?.productImage ? (
+          <div className="w-full aspect-video overflow-hidden group border border-black">
+            <Link href={`/product/${id}/view`}>
+              <Image
+                src={product?.productImage}
+                alt="productImage"
+                height={180}
+                width={320}
+                className="w-full h-auto transition group-hover:scale-110"
+              />
+            </Link>
+          </div>
+        ) : (
+          <Link href={`/product/${id}/view`}>
+            <div className="w-full aspect-video bg-black"></div>
+          </Link>
+        )}
+
+        <div className="px-3 py-2">
+          <div className="text-2xl">{product.title}</div>
+          <div className="text-lg text-gray-500">{product.desc}</div>
+          {!removeUser && product?.owner?.image && (
+            <>
+              <Link
+                href={`/profile/${product?.owner?.email}/panel`}
+                className="group"
+              >
+                <div className="flex gap-2 items-center my-2">
+                  <div className="rounded-full overflow-hidden">
+                    <Image
+                      src={product?.owner?.image}
+                      alt={`${product?.owner?.name} Image`}
+                      width={35}
+                      height={35}
+                    ></Image>
+                  </div>
+                  <div className="text-lg group-hover:underline">
+                    {product?.owner?.name}
+                  </div>
+                </div>
               </Link>
-            )}
-          </>
-        )}
+            </>
+          )}
+        </div>
       </CardContent>
+
       <CardFooter className="space-x-2">
-        {isOwner && (
-          <>
-            <DeleteButton id={id} />
-            <Button asChild>
-              <Link href={`/product/${id}`}>Edit</Link>
+        {session?.user.id !== null && !isOwner && (
+          <div className="flex justify-between w-full items-center pr-5">
+            <Button className="px-10 w-full">
+              <Link href={`/payment/${id}`}>
+                Pay ${product.pricePaidInCents / 100}
+              </Link>
             </Button>
-          </>
-        )}
-        {userId !== null && !isOwner && (
-          <>
-            <Button variant={"outline"}>
-              <Link href={`/payment/${id}`}>Buy</Link>
-            </Button>
-          </>
+          </div>
         )}
       </CardFooter>
     </Card>

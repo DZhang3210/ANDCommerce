@@ -5,6 +5,7 @@ import ProfileOrderTable from "./_components/ProfileOrdersTable";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import Image from "next/image";
+import { faTruckMedical } from "@fortawesome/free-solid-svg-icons";
 
 type ProfilePanelProps = {
   params: {
@@ -45,6 +46,7 @@ const ProfilePanel = async ({
         title: true,
         desc: true,
         pricePaidInCents: true,
+        productImage: true,
         owner: {
           select: {
             id: true,

@@ -21,6 +21,7 @@ const getSchema = z.object({
     .number({ message: "Price must be a number" })
     .int({ message: "price must be an integer" })
     .min(1, "price must be at least 1 cent"),
+  productImage: z.string({ message: "profileImage is required" }),
 });
 
 export const addProduct = async (prevState: unknown, formData: FormData) => {
@@ -36,7 +37,8 @@ export const addProduct = async (prevState: unknown, formData: FormData) => {
     title: formData.get("title"),
     desc: formData.get("desc"),
     price: formData.get("price"),
-  } as { title: string; desc: string; price: string };
+    productImage: formData.get("productImage"),
+  } as { title: string; desc: string; price: string; productImage: string };
 
   // Validate data against the schema
   const result = getSchema.safeParse(unvalidatedData);
@@ -53,6 +55,7 @@ export const addProduct = async (prevState: unknown, formData: FormData) => {
       data: {
         title: unvalidatedData.title,
         desc: unvalidatedData.desc,
+        productImage: unvalidatedData.productImage,
         pricePaidInCents: Number(unvalidatedData.price),
         ownerID: user?.id,
       },
@@ -95,6 +98,7 @@ const editSchema = z.object({
     .int({ message: "price must be an integer" })
     .min(1, "price must be at least 1 cent"),
   id: z.string({ message: "id must be known" }),
+  productImage: z.string({ message: "profileImage is required" }),
 });
 export async function editProduct(
   prevState: { [key: string]: string[] } | undefined,
@@ -106,7 +110,14 @@ export async function editProduct(
     desc: formData.get("desc"),
     price: formData.get("price"),
     id: formData.get("id"),
-  } as { title: string; desc: string; price: string; id: string };
+    productImage: formData.get("productImage"),
+  } as {
+    title: string;
+    desc: string;
+    price: string;
+    id: string;
+    productImage: string;
+  };
   // Validate data against the schema
   const result = editSchema.safeParse(unvalidatedData);
   // Check if validation succeeded
@@ -122,6 +133,7 @@ export async function editProduct(
         title: unvalidatedData.title,
         desc: unvalidatedData.desc,
         pricePaidInCents: Number(unvalidatedData.price),
+        productImage: unvalidatedData.productImage,
       },
     });
     console.log("Product updated:", newPost);
