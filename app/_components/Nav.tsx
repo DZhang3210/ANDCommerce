@@ -24,19 +24,19 @@ const Nav = ({ session, isAdmin }: NavProps) => {
   console.log("Session", session);
   console.log("isAdmin", isAdmin);
   return (
-    <div className="fixed top-0 left-0 right-0 h-[6rem] bg-slate-500 flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
+    <div className="fixed top-0 left-0 right-0 h-[6rem] bg-[#3B3B46] flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
       <Link href="/" className="block">
-        <div className="flex items-center gap-1 font-semibold group">
-          <div className="hidden sm:block">
+        <div className="flex items-center gap-3 font-semibold group">
+          <Ampersand
+            size={55}
+            className="transition group group-hover:scale-105 origin-center text-blue-100"
+          />
+          <div className="hidden sm:block text-gray-200">
             <span className="text-white text-4xl font-bold group-hover:text-blue-800 transition">
               AND
             </span>
             Commerce
           </div>
-          <Ampersand
-            size={40}
-            className="transition group group-hover:scale-105 origin-center"
-          />
         </div>
       </Link>
 
@@ -79,7 +79,7 @@ const Nav = ({ session, isAdmin }: NavProps) => {
                     </DropdownMenuItem>
                   )}
                   {
-                    <div className="block md:hidden">
+                    <div className="block lg:hidden">
                       <DropdownMenuItem>
                         <Button asChild variant="outline" className="px-10">
                           <Link href="/product/create" className="text-lg">
@@ -100,10 +100,12 @@ const Nav = ({ session, isAdmin }: NavProps) => {
               <div>Logged In</div>
             )}
           </div>
-          <span className="flex-row gap-3 items-center hidden md:flex">
-            <Button onClick={() => signOut()}>Log Out</Button>
-            <Button asChild variant="outline" className="px-10">
-              <Link href="/product/create" className="text-lg">
+          <span className="flex-row gap-3 items-center hidden lg:flex">
+            <Button onClick={() => signOut()} className="py-6 text-xl">
+              Log Out
+            </Button>
+            <Button asChild variant="outline" className="px-10 py-6">
+              <Link href="/product/create" className="text-xl">
                 Create Product
               </Link>
             </Button>

@@ -7,6 +7,7 @@ import Provider from "./_components/Provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
+import Footer from "./_components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,7 +38,8 @@ export default async function RootLayout({
       <body className={inter.className}>
         <Provider session={session}>
           <Nav session={session} isAdmin={isAdmin} />
-          <div className="mt-32">{children}</div>
+          <div className="mt-24 overflow-auto min-h-[84vh]">{children}</div>
+          <Footer />
         </Provider>
       </body>
     </html>
