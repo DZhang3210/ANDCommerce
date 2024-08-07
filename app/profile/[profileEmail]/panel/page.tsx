@@ -101,7 +101,7 @@ const ProfilePanel = async ({
             {orders.length !== 0 ? (
               <ProfileOrderTable orders={orders} />
             ) : (
-              <div className="mt-5">You don't have any orders....</div>
+              <div className="mt-5">You don&apos;t have any orders....</div>
             )}
           </>
         )}

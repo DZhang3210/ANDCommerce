@@ -44,6 +44,7 @@ const OrderTable = ({ orders }: OrderTableProps) => {
         <TableBody>
           {orders.map((order) => (
             <OrderRow
+              key={order.id}
               id={order.id}
               pricePaidInCents={order.pricePaidInCents}
               createdAt={order.createdAt}
