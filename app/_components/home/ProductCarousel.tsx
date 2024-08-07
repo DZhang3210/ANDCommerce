@@ -35,7 +35,7 @@ const ProductCarousel = async () => {
       >
         <CarouselContent>
           {products.map((product, i) => (
-            <CarouselItem className="sm:basis-1/2 md:basis-1/3">
+            <CarouselItem key={i} className="sm:basis-1/2 md:basis-1/3">
               <CardComponent key={i} product={product} />
             </CarouselItem>
           ))}
