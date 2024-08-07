@@ -19,10 +19,13 @@ const Hero = () => {
         We sell everything from toys to knick knacks
       </div>
       <div className="flex gap-2">
-        <Button asChild className="rounded-full text-1xl z-[1]">
+        <Button asChild className="rounded-full text-xl z-[1] px-10 py-6">
           <Link href="/search">Browse Products</Link>
         </Button>
-        <Button className="rounded-full text-xl z-[1]" variant={"outline"}>
+        <Button
+          className="rounded-full text-xl z-[1] px-10 py-6"
+          variant={"outline"}
+        >
           <Link href="signup">Sign In</Link>
         </Button>
       </div>

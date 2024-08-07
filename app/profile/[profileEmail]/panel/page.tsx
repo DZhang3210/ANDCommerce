@@ -64,10 +64,10 @@ const ProfilePanel = async ({
   const orders = userWithOrders?.orders || [];
 
   return (
-    <div className="container">
-      <div className="text-4xl flex gap-4 items-center">
+    <div className="container mt-10">
+      <div className="text-6xl flex gap-4 items-center">
         <span className="font-semibold">Profile</span>
-        <User size={40} />
+        <User size={50} />
       </div>
       <hr className="mb-10 h-[2px] border-black border-3" />
       <div className="flex flex-col md:flex-row md:gap-10 mb-10">

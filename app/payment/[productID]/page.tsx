@@ -32,10 +32,10 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
 
   // Return the component with product and userID
   return (
-    <div className="container">
-      <div className="mb-2 text-4xl flex gap-2 items-center">
+    <div className="container mt-10">
+      <div className="mb-2 text-6xl flex gap-4 items-center">
         <div className="font-semibold">CheckOut</div>
-        <ShoppingCart size={40} />
+        <ShoppingCart size={50} />
       </div>
       <hr className="mb-10 h-[2px] border-black border-3" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-2 px-10">

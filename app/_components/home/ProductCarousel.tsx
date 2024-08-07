@@ -49,15 +49,17 @@ const ProductCarousel = async () => {
 
 const CardComponent = ({ product }: { product: Product }) => {
   return (
-    <Card className="">
-      <div className="aspect-video overflow-hidden border-4 border-black">
-        <Image
-          src={product?.productImage}
-          alt="profile-name"
-          width={1600}
-          height={900}
-          className="w-full h-auto"
-        />
+    <Card className="border-transparent border-4 transition hover:scale-105">
+      <div className="aspect-video overflow-hidden border-2 border-black">
+        <Link href={`/product/${product.id}/view`}>
+          <Image
+            src={product?.productImage}
+            alt="profile-name"
+            width={1600}
+            height={900}
+            className="w-full h-auto transition hover:scale-105"
+          />
+        </Link>
       </div>
       <CardHeader>
         <CardTitle>
@@ -68,7 +70,7 @@ const CardComponent = ({ product }: { product: Product }) => {
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button asChild>
+        <Button asChild className="px-10 py-6 text-xl">
           <Link href={`/product/${product?.id}/view`}>View Product</Link>
         </Button>
       </CardFooter>

@@ -25,23 +25,29 @@ const Nav = ({ session, isAdmin }: NavProps) => {
   console.log("isAdmin", isAdmin);
   return (
     <div className="fixed top-0 left-0 right-0 h-[6rem] bg-[#3B3B46] flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
-      <Link href="/" className="block">
-        <div className="flex items-center gap-3 font-semibold group">
-          <Ampersand
-            size={55}
-            className="transition group group-hover:scale-105 origin-center text-blue-100"
-          />
-          <div className="hidden sm:block text-gray-200">
-            <span className="text-white text-4xl font-bold group-hover:text-blue-800 transition">
-              AND
-            </span>
-            Commerce
+      <div className="flex items-center gap-5">
+        <Link href="/" className="block">
+          <div className="flex items-center gap-3 font-semibold group">
+            <Ampersand
+              size={55}
+              className="transition group group-hover:scale-105 origin-center text-blue-100"
+            />
+            <div className="hidden sm:block text-gray-200">
+              <span className="text-white text-4xl font-bold group-hover:text-blue-800 transition">
+                AND
+              </span>
+              Commerce
+            </div>
           </div>
+        </Link>
+      </div>
+      <Link href="/search">
+        <div className="text-2xl px-10 py-2 font-bold text-gray-200 transition hover:text-black bg-slate-500 rounded-2xl">
+          Find Products
         </div>
       </Link>
-
       {!session ? (
-        <Button asChild>
+        <Button asChild className="px-10 py-6 text-xl">
           <Link href="/signup">Sign In</Link>
         </Button>
       ) : (
