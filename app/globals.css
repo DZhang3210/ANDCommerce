@@ -71,3 +71,8 @@
 body {
   @apply bg-neutral-100 overflow-y-scroll;
 }
+
+#__next {
+  @apply h-full;
+  overflow-y: scroll;
+}

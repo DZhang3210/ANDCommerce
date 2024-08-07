@@ -6,7 +6,21 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 const EditPage = async ({ params: { id } }: { params: { id: string } }) => {
-  const post = await prisma.product.findUnique({ where: { id } });
+  const post = await prisma.product.findUnique({
+    where: { id },
+    select: {
+      desc: true,
+      title: true,
+      pricePaidInCents: true,
+      productImage: true,
+      tags: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
+    },
+  });
   if (!post) {
     redirect("/");
   }
@@ -19,6 +33,7 @@ const EditPage = async ({ params: { id } }: { params: { id: string } }) => {
         title={post.title}
         pricePaidInCents={post.pricePaidInCents}
         productImage={post.productImage}
+        defaultTags={post.tags}
       />
     </div>
   );

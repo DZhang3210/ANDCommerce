@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -41,11 +42,14 @@ const ImageUpload = ({ name, icon, defaultValue }: ImageUploadProps) => {
       <div className="w-full">
         {/* <Star className='text-gray-400'/> */}
         {/* <icon/> */}
+        <Label className="text-xl">Profile Image</Label>
         {(isUploading || isImageLoading) && (
-          <FontAwesomeIcon
-            icon={faSpinner}
-            className="text-gray-400 animate-spin"
-          />
+          <div className="w-full flex aspect-video overflow-hidden border-4 border-white items-center justify-center">
+            <FontAwesomeIcon
+              icon={faSpinner}
+              className="text-gray-400 animate-spin text-xl"
+            />
+          </div>
         )}
         {!isUploading && url && (
           <div className="w-full flex aspect-video overflow-hidden border-4 border-black">
@@ -70,7 +74,6 @@ const ImageUpload = ({ name, icon, defaultValue }: ImageUploadProps) => {
           ref={fileInRef}
           type="file"
           className="hidden"
-          required
         />
         <Button
           type="button"
@@ -78,7 +81,7 @@ const ImageUpload = ({ name, icon, defaultValue }: ImageUploadProps) => {
           variant="outline"
           className="w-full mt-2 text-xl"
         >
-          Select File [Required]
+          Select File
         </Button>
       </div>
     </div>

@@ -13,6 +13,12 @@ export default async function BlankSearchPage() {
       desc: true,
       pricePaidInCents: true,
       productImage: true,
+      tags: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
       owner: {
         select: {
           name: true,

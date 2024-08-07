@@ -1,4 +1,5 @@
 import DeleteButton from "@/app/_components/DeleteButton";
+import TagList from "@/app/_components/TagList";
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
@@ -13,6 +14,10 @@ type ViewProductPageProps = {
     id: string;
   };
 };
+type Tags = {
+  [key: string]: boolean;
+};
+
 const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
   const session = await getServerSession(authOptions);
   const product = await prisma.product.findUnique({
@@ -24,9 +29,22 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
       pricePaidInCents: true,
       productImage: true,
       owner: true,
+      tags: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
     },
   });
   if (!product) notFound();
+  const tagList: Record<string, boolean> = product.tags.reduce<Tags>(
+    (acc, tag) => {
+      acc[tag.title] = true; // Use the title as the key and set the value to true
+      return acc;
+    },
+    {}
+  );
   return (
     <div className="container">
       <div className="grid grid-cols-2 gap-12">
@@ -39,8 +57,11 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
             className="w-full h-auto"
           />
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col items-start gap-1">
           <div className="text-4xl uppercase font-bold">{product.title}</div>
+          <div>
+            <TagList tags={tagList} />
+          </div>
           <div className="text-xl">${product.pricePaidInCents}</div>
           <div className="text-xl text-gray-600 mt-10">{product.desc}</div>
           <Button asChild>

@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import Image from "next/image";
 import { faTruckMedical } from "@fortawesome/free-solid-svg-icons";
+import { User } from "lucide-react";
 
 type ProfilePanelProps = {
   params: {
@@ -47,6 +48,7 @@ const ProfilePanel = async ({
         desc: true,
         pricePaidInCents: true,
         productImage: true,
+        tags: true,
         owner: {
           select: {
             id: true,
@@ -63,9 +65,14 @@ const ProfilePanel = async ({
 
   return (
     <div className="container">
-      <div className="flex gap-10">
+      <div className="text-4xl flex gap-4 items-center">
+        <span className="font-semibold">Profile</span>
+        <User size={40} />
+      </div>
+      <hr className="mb-10 h-[2px] border-black border-3" />
+      <div className="flex flex-col md:flex-row md:gap-10 mb-10">
         {userWithOrders?.image && (
-          <div className="rounded-full overflow-hidden aspect-square w-1/4 mb-10">
+          <div className="rounded-full overflow-hidden aspect-square w-[300px] md:mb-10">
             <Image
               src={userWithOrders?.image}
               alt="user-profile"
@@ -75,7 +82,9 @@ const ProfilePanel = async ({
           </div>
         )}
         <div className="text-4xl">
-          <div className="mt-20 font-semibold">{userWithOrders?.name}</div>
+          <div className="mt-5 md:mt-20font-semibold">
+            {userWithOrders?.name}
+          </div>
           <div className="text-gray-500 text-[1rem] indent-2 italic">
             @{decodedURI}
           </div>

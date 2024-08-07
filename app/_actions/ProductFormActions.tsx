@@ -22,6 +22,11 @@ const getSchema = z.object({
     .int({ message: "price must be an integer" })
     .min(1, "price must be at least 1 cent"),
   productImage: z.string({ message: "profileImage is required" }),
+  tags: z
+    .record(z.boolean())
+    .refine((tags) => Object.keys(tags).every((tag) => tag.length > 1), {
+      message: "Each tag must have more than 1 character",
+    }),
 });
 
 export const addProduct = async (prevState: unknown, formData: FormData) => {
@@ -34,11 +39,13 @@ export const addProduct = async (prevState: unknown, formData: FormData) => {
 
   // Convert FormData to a plain object
   const unvalidatedData = {
-    title: formData.get("title"),
-    desc: formData.get("desc"),
-    price: formData.get("price"),
-    productImage: formData.get("productImage"),
-  } as { title: string; desc: string; price: string; productImage: string };
+    title: formData.get("title") as string,
+    desc: formData.get("desc") as string,
+    price: formData.get("price") as string,
+    productImage: formData.get("productImage") as string,
+    tags: JSON.parse(formData.get("tags") as string),
+  };
+  console.log("Tags", unvalidatedData.tags);
 
   // Validate data against the schema
   const result = getSchema.safeParse(unvalidatedData);
@@ -58,6 +65,14 @@ export const addProduct = async (prevState: unknown, formData: FormData) => {
         productImage: unvalidatedData.productImage,
         pricePaidInCents: Number(unvalidatedData.price),
         ownerID: user?.id,
+        tags: {
+          connectOrCreate: Object.keys(unvalidatedData.tags).map(
+            (tag: string) => ({
+              where: { title: tag },
+              create: { title: tag },
+            })
+          ),
+        },
       },
     });
     console.log("Product created:", newPost);
@@ -98,7 +113,14 @@ const editSchema = z.object({
     .int({ message: "price must be an integer" })
     .min(1, "price must be at least 1 cent"),
   id: z.string({ message: "id must be known" }),
-  productImage: z.string({ message: "profileImage is required" }),
+  productImage: z
+    .string({ message: "profileImage is required" })
+    .min(1, "Profile image must be set"),
+  tags: z
+    .record(z.boolean())
+    .refine((tags) => Object.keys(tags).every((tag) => tag.length > 1), {
+      message: "Each tag must have more than 1 character",
+    }),
 });
 export async function editProduct(
   prevState: { [key: string]: string[] } | undefined,
@@ -106,17 +128,12 @@ export async function editProduct(
 ) {
   // Convert FormData to a plain object
   const unvalidatedData = {
-    title: formData.get("title"),
-    desc: formData.get("desc"),
-    price: formData.get("price"),
-    id: formData.get("id"),
-    productImage: formData.get("productImage"),
-  } as {
-    title: string;
-    desc: string;
-    price: string;
-    id: string;
-    productImage: string;
+    title: formData.get("title") as string,
+    desc: formData.get("desc") as string,
+    price: formData.get("price") as string,
+    id: formData.get("id") as string,
+    productImage: formData.get("productImage") as string,
+    tags: JSON.parse(formData.get("tags") as string),
   };
   // Validate data against the schema
   const result = editSchema.safeParse(unvalidatedData);
@@ -134,6 +151,15 @@ export async function editProduct(
         desc: unvalidatedData.desc,
         pricePaidInCents: Number(unvalidatedData.price),
         productImage: unvalidatedData.productImage,
+        tags: {
+          set: [],
+          connectOrCreate: Object.keys(unvalidatedData.tags).map(
+            (tag: string) => ({
+              where: { title: tag },
+              create: { title: tag },
+            })
+          ),
+        },
       },
     });
     console.log("Product updated:", newPost);

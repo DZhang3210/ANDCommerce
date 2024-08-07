@@ -12,6 +12,8 @@ import DeleteButton from "./DeleteButton";
 import Link from "next/link";
 import Image from "next/image";
 import { Session } from "next-auth";
+import { Tag } from "@prisma/client";
+import TagList from "./TagList";
 
 type ResultProp = {
   id: string;
@@ -19,6 +21,7 @@ type ResultProp = {
   desc: string;
   pricePaidInCents: number;
   productImage: string;
+  tags: Tag[];
   owner: {
     name: string | null;
     image: string | null;
@@ -48,7 +51,7 @@ const Feed = ({ results, session, removeUser }: FeedProps) => {
   // console.log("session", session);
   // console.log("HERE", session ? results[0].owner?.id : null);
   return (
-    <div className="grid grid-cols-4 gap-4 my-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-10">
       {results.map((result) => (
         <BlogCard
           key={result.id}
@@ -68,8 +71,18 @@ type BlogCardProps = {
   removeUser: boolean | undefined;
   session: ExtendedSession | null;
 };
+type Tags = {
+  [key: string]: boolean;
+};
 
 const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
+  const tags: Record<string, boolean> = product.tags.reduce<Tags>(
+    (acc, tag) => {
+      acc[tag.title] = true; // Use the title as the key and set the value to true
+      return acc;
+    },
+    {}
+  );
   const isOwner = session?.user?.id === product.owner?.id;
   return (
     <Card className="m-0 p-0 transition hover:scale-105 border border-transparent hover:border-black">
@@ -93,8 +106,11 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
         )}
 
         <div className="px-3 py-2">
-          <div className="text-2xl">{product.title}</div>
-          <div className="text-lg text-gray-500">{product.desc}</div>
+          <div className="text-2xl line-clamp-2">{product.title}</div>
+          <div className="text-lg text-gray-500 line-clamp-1">
+            {product.desc}
+          </div>
+          <TagList tags={tags} />
           {!removeUser && product?.owner?.image && (
             <>
               <Link
@@ -110,7 +126,7 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
                       height={35}
                     ></Image>
                   </div>
-                  <div className="text-lg group-hover:underline">
+                  <div className="text-lg group-hover:underline line-clamp-1">
                     {product?.owner?.name}
                   </div>
                 </div>

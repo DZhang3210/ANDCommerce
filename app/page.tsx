@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import SearchBar from "./_components/SearchBar";
+import { Book } from "lucide-react";
 
 export default async function Home() {
   const results = await prisma.product.findMany({
@@ -13,6 +14,7 @@ export default async function Home() {
       desc: true,
       pricePaidInCents: true,
       productImage: true,
+      tags: true,
       owner: {
         select: {
           name: true,
@@ -28,7 +30,11 @@ export default async function Home() {
   return (
     <div className="container mt-10">
       <SearchBar />
-      <h1 className="text-4xl">Products</h1>
+      <div className="text-4xl flex gap-4 items-center">
+        <span className="font-semibold">Products</span>
+        <Book size={40} />
+      </div>
+      <hr className="mb-10 h-[2px] border-black border-3" />
       <Feed results={results} session={session} />
     </div>
   );

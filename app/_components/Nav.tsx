@@ -28,7 +28,7 @@ const Nav = ({ session, isAdmin }: NavProps) => {
     <div className="fixed top-0 left-0 right-0 h-[6rem] bg-slate-500 flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
       <Link href="/" className="block">
         <div className="flex items-center gap-1 font-semibold group">
-          <div>
+          <div className="hidden sm:block">
             <span className="text-white text-4xl font-bold group-hover:text-blue-800 transition">
               AND
             </span>
@@ -79,18 +79,36 @@ const Nav = ({ session, isAdmin }: NavProps) => {
                       </Link>
                     </DropdownMenuItem>
                   )}
+                  {
+                    <div className="block md:hidden">
+                      <DropdownMenuItem>
+                        <Button asChild variant="outline" className="px-10">
+                          <Link href="/product/create" className="text-lg">
+                            Create Product
+                          </Link>
+                        </Button>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Button onClick={() => signOut()} className="w-full">
+                          Log Out
+                        </Button>
+                      </DropdownMenuItem>
+                    </div>
+                  }
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <div>Logged In</div>
             )}
           </div>
-          <Button onClick={() => signOut()}>Log Out</Button>
-          <Button asChild variant="outline" className="px-10">
-            <Link href="/product/create" className="text-lg">
-              Create Product
-            </Link>
-          </Button>
+          <span className="flex-row gap-3 items-center hidden md:flex">
+            <Button onClick={() => signOut()}>Log Out</Button>
+            <Button asChild variant="outline" className="px-10">
+              <Link href="/product/create" className="text-lg">
+                Create Product
+              </Link>
+            </Button>
+          </span>
         </div>
       )}
     </div>

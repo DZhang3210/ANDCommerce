@@ -8,6 +8,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import { addProduct, editProduct } from "../_actions/ProductFormActions";
 import ImageUpload from "./ImageUpload";
 import { Tag } from "@prisma/client";
+import TagList from "./TagList";
 
 function wait(duration: number) {
   return new Promise((resolve) => setTimeout(resolve, duration));
@@ -34,12 +35,27 @@ const ProductForm = ({
     id && desc && title ? editProduct : addProduct,
     {}
   );
-  const [tags, setTags] = useState<Tag[]>(defaultTags || []);
+  type Tags = {
+    [key: string]: boolean;
+  };
+
+  const defaultTagInit = defaultTags?.reduce<Tags>((acc, tag) => {
+    acc[tag.title] = true; // Use tag titles as keys with value
+    return acc;
+  }, {});
+  const [tags, setTags] = useState(defaultTagInit || {});
+  const [tag, setTag] = useState("");
+  const addTag = () => {
+    if (tag) {
+      setTags((prevTags) => ({ ...prevTags, [tag]: true }));
+      setTag(""); // Clear the input field
+    }
+  };
 
   return (
     <>
       <form action={action}>
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <Label htmlFor="title">Title</Label>
             <Input
@@ -74,16 +90,35 @@ const ProductForm = ({
             )}
             <Label htmlFor="tags">Tags</Label>
             <div className="flex gap-1">
-              <Input type="text" placeholder="tags"></Input>
-              <Button variant="outline">Add Tag</Button>
-            </div>
+              <Input
+                type="text"
+                placeholder="tags"
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
+              />
 
+              <Button variant="outline" type="button" onClick={addTag}>
+                Add Tag
+              </Button>
+            </div>
+            {error?.tags && (
+              <div className="text-destructive">{error?.tags}</div>
+            )}
+            <TagList tags={tags} setTags={setTags} />
+
+            {/* Hidden input to store the tags as a JSON string */}
+            <input type="hidden" name="tags" value={JSON.stringify(tags)} />
+
+            {/* Don't touch this, id for editing mode */}
             {id && (
               <input className="hidden" name="id" readOnly value={id}></input>
             )}
           </div>
           <div className="w-full">
             <ImageUpload name="productImage" defaultValue={productImage} />
+            {error?.productImage && (
+              <div className="text-destructive">{error?.productImage}</div>
+            )}
           </div>
         </div>
         <SubmitButton />

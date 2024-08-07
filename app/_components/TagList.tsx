@@ -1,18 +1,43 @@
 import { Badge } from "@/components/ui/badge";
 import { Tag } from "@prisma/client";
+import { X } from "lucide-react";
 import React from "react";
 
+type Tags = {
+  [key: string]: boolean;
+};
 type TagListProps = {
-  tags: Tag[];
+  tags: Record<string, boolean>;
+  setTags?: React.Dispatch<React.SetStateAction<Tags>>;
 };
 
-const TagList = ({ tags }: TagListProps) => {
+const TagList = ({ tags, setTags }: TagListProps) => {
+  const removeTag = (tagToRemove: string) => {
+    if (setTags) {
+      setTags((prevTags) => {
+        const updatedTags = { ...prevTags };
+        delete updatedTags[tagToRemove];
+        return updatedTags;
+      });
+    }
+  };
   return (
-    <>
-      {tags.map((tag, i) => (
-        <Badge key={i}>{tag.title}</Badge>
+    <div className="space-x-1">
+      {Object.keys(tags).map((tag, i) => (
+        <Badge key={i} className="inline-flex items-center px-5 py-1">
+          <span>{tag}</span>
+          {setTags && (
+            <button
+              onClick={() => {
+                removeTag(tag);
+              }}
+            >
+              <X size={15} />
+            </button>
+          )}
+        </Badge>
       ))}
-    </>
+    </div>
   );
 };
 

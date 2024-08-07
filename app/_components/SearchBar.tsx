@@ -18,7 +18,7 @@ const SearchBar = ({ kWord }: SearchBarProps) => {
   };
 
   return (
-    <div className="flex w-1/2 my-6 text-xl items-center border rounded-full px-5 bg-white">
+    <div className="flex w-full lg:w-1/2 my-6 text-xl items-center border rounded-full px-5 bg-white">
       <input
         type="text"
         placeholder="search.."
@@ -27,7 +27,7 @@ const SearchBar = ({ kWord }: SearchBarProps) => {
         onKeyDown={handleKeyDown}
         className="grow outline-none border-l-4 border-black pl-5 my-4"
       />
-      <Link href={`/search/${keyword}`}>
+      <Link href={`/search/${keyword}`} className="hidden md:inline-block">
         <Search size={40} />
       </Link>
     </div>

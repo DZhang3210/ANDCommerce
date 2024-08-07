@@ -32,11 +32,11 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
   return (
     <div className="container">
       <div className="mb-2 text-4xl flex gap-2 items-center">
-        <div>CheckOut</div>
+        <div className="font-semibold">CheckOut</div>
         <ShoppingCart size={40} />
       </div>
       <hr className="mb-10 h-[2px] border-black border-3" />
-      <div className="grid grid-cols-2 gap-2 px-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-2 px-10">
         <div className="flex flex-col gap-2">
           {product.productImage === "" ? (
             <div className="bg-black w-3/4 aspect-video"></div>
