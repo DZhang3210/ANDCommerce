@@ -14,7 +14,6 @@ import { Session } from "next-auth";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 
 type NavProps = {
   session?: Session | null;
