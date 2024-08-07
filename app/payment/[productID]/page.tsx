@@ -1,10 +1,12 @@
 // Import necessary modules
 import CheckoutWrapper from "@/app/_components/CheckoutWrapper";
+import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
 import { ShoppingCart } from "lucide-react";
 import { getServerSession } from "next-auth/next"; // Use next-auth/next to import getServerSession
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -20,12 +22,12 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
   if (!product) notFound(); // Return a 404 if product is not found
 
   // Fetch the session
+  let mustLogin = false;
   const session = await getServerSession(authOptions);
-  if (!session) notFound(); // Return a 404 if session is not found
+  if (!session) mustLogin = true; // Return a 404 if session is not found
   console.log("SESSION", session);
-  const userID = session.user.id;
-  if (!userID) notFound();
-  console.log("userID", userID);
+
+  //   const userID = session.user.id;
   // Fetch the user ID from the database using the session's email
 
   // Return the component with product and userID
@@ -54,7 +56,16 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
           <h1 className="text-3xl">{product.title}</h1>
           <div className="text-lg">{product.desc}</div>
         </div>
-        <CheckoutWrapper product={product} userID={userID} />
+        {session ? (
+          <CheckoutWrapper product={product} userID={session.user.id} />
+        ) : (
+          <div>
+            <div className="text-5xl font-semibold">Must Sign In First</div>
+            <Button asChild className="mt-4">
+              <Link href="/signup">Sign In</Link>
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
