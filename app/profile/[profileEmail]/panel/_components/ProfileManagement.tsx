@@ -60,7 +60,7 @@ const ProfileManagement = ({
   profileEmail,
 }: ProfileManagementProps) => {
   return (
-    <Tabs defaultValue="account" className="w-full">
+    <Tabs defaultValue="products" className="w-full">
       <TabsList className="text-2xl">
         <TabsTrigger value="products" className="text-4xl">
           Products
