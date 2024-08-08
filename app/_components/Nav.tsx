@@ -25,24 +25,24 @@ const Nav = ({ session, isAdmin }: NavProps) => {
   console.log("isAdmin", session);
   return (
     <div className="fixed top-0 left-0 right-0 h-[6rem] bg-[#3B3B46] flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-2">
         <Link href="/" className="block">
           <div className="flex items-center gap-3 font-semibold group">
             <Ampersand
               size={55}
               className="transition group group-hover:scale-105 origin-center text-blue-100"
             />
-            <div className="hidden sm:block text-gray-200">
-              <span className="text-white text-4xl font-bold group-hover:text-blue-800 transition">
+            <div className="hidden md:block text-gray-200">
+              {/* <span className="text-white text-4xl font-bold group-hover:text-blue-800 transition">
                 AND
-              </span>
+              </span> */}
               Commerce
             </div>
           </div>
         </Link>
       </div>
       <Link href="/search">
-        <div className="text-2xl px-10 py-2 font-bold text-gray-200 transition hover:text-black bg-slate-500 rounded-2xl">
+        <div className="text-2xl px-5 py-2 font-bold text-gray-200 transition hover:text-black bg-slate-500 rounded-2xl hidden sm:block">
           Find Products
         </div>
       </Link>
@@ -67,34 +67,45 @@ const Nav = ({ session, isAdmin }: NavProps) => {
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="z-[110]">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuLabel className="text-xl">
+                    My Account
+                  </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <Link
                       href={`/profile/${session.user.email}/panel`}
-                      className="w-full"
+                      className="w-full text-lg"
                     >
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   {isAdmin && (
                     <DropdownMenuItem>
-                      <Link href={`/admin`} className="w-full">
+                      <Link href={`/admin`} className="w-full text-lg">
                         Admin
                       </Link>
                     </DropdownMenuItem>
                   )}
+                  <DropdownMenuItem className="block sm:hidden">
+                    <Link href="/search" className="w-full text-lg">
+                      Find Products
+                    </Link>
+                  </DropdownMenuItem>
                   {
-                    <div className="block lg:hidden">
+                    <div className="block md:hidden">
                       <DropdownMenuItem>
                         <Button asChild variant="outline" className="px-10">
-                          <Link href="/product/create" className="text-lg">
+                          <Link href="/product/create" className="text-xl">
                             Create Product
                           </Link>
                         </Button>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
-                        <Button onClick={() => signOut()} className="w-full">
+                        <Button
+                          onClick={() => signOut()}
+                          variant={"destructive"}
+                          className="w-full text-lg"
+                        >
                           Log Out
                         </Button>
                       </DropdownMenuItem>

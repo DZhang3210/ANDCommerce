@@ -68,8 +68,12 @@
   }
 }
 
+html {
+  @apply overflow-y-scroll;
+}
+
 body {
-  @apply bg-neutral-100 overflow-y-scroll;
+  @apply bg-neutral-100 overflow-y-scroll py-0 m-0;
 }
 
 #__next {
@@ -82,7 +86,7 @@ body {
   padding: 0;
 }
 
-/* html,
-body {
-  height: 100%;
-} */
+#__next {
+  @apply h-full;
+  overflow-y: scroll;
+}

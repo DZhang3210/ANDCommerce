@@ -11,9 +11,9 @@ const AuthorizationPage = () => {
         alt="NextAuth-logo"
         width={386}
         height={234}
-        className="hidden lg:block"
+        className="hidden lg:block px-2"
       />
-      <div className="flex flex-col gap-4 items-start">
+      <div className="flex flex-col gap-4 items-start px-2">
         <div className="text-4xl max-w-sm font-semibold">
           Authentication w/ NextAuth
         </div>
@@ -30,7 +30,7 @@ const AuthorizationPage = () => {
         alt="NextAuth-logo"
         width={386}
         height={234}
-        className="block lg:hidden"
+        className="block lg:hidden px-2"
       />
     </div>
   );

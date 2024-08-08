@@ -56,7 +56,7 @@ const CardComponent = ({ product }: { product: Product }) => {
           {product.productImage === "" ? (
             <div className="bg-black w-full aspect-video"></div>
           ) : (
-            <div className="w-3/4 aspect-video">
+            <div className="w-full aspect-video">
               <Image
                 src={product.productImage}
                 alt="product-image"

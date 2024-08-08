@@ -15,10 +15,10 @@ const Hero = () => {
       <div className="text-5xl font-semibold z-[1] text-center">
         Buy Your F<span className="text-6xl mt-10">.&.</span>vorite Products
       </div>
-      <div className="text-xl text-gray-800 z-[1]">
+      <div className="text-xl text-gray-800 z-[1] px-5">
         We sell everything from toys to knick knacks
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-col sm:flex-row">
         <Button asChild className="rounded-full text-xl z-[1] px-10 py-6">
           <Link href="/search">Browse Products</Link>
         </Button>
