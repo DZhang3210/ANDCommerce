@@ -148,7 +148,7 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
       <CardFooter className="space-x-2">
         {session?.user.id !== null && !isOwner && (
           <div className="flex justify-between w-full items-center pr-5">
-            <Button className="px-10 w-full">
+            <Button className="px-10 w-full" asChild>
               <Link href={`/payment/${id}`}>
                 Pay ${product.pricePaidInCents / 100}
               </Link>

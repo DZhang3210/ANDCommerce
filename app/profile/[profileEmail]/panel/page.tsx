@@ -154,7 +154,6 @@ const ProfilePanel = async ({
         decodedURI={decodedURI}
         products={userProducts}
         favoriteProducts={favoriteProducts}
-        profileEmail={profileEmail}
       />
     </div>
   );

@@ -99,6 +99,7 @@ export const addProduct = async (prevState: unknown, formData: FormData) => {
 export async function deleteProduct({ id }: { id: string }) {
   await prisma.product.delete({ where: { id } });
   revalidatePath("/");
+  redirect("/");
 }
 
 const editSchema = z.object({

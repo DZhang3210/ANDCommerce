@@ -48,7 +48,6 @@ type ProfileManagementProps = {
   decodedURI: string;
   products: ResultProp[];
   favoriteProducts: ResultProp[];
-  profileEmail: string;
 };
 
 const ProfileManagement = ({
@@ -57,8 +56,8 @@ const ProfileManagement = ({
   decodedURI,
   products,
   favoriteProducts,
-  profileEmail,
 }: ProfileManagementProps) => {
+  //   console.log("profileEmail", profileEmail);
   return (
     <Tabs defaultValue="products" className="w-full">
       <TabsList className="text-2xl">
@@ -68,7 +67,7 @@ const ProfileManagement = ({
         <TabsTrigger value="favorites" className="text-4xl">
           Favorites
         </TabsTrigger>
-        {profileEmail === session?.user.email && (
+        {decodedURI === session?.user.email && (
           <TabsTrigger value="orders" className="text-4xl">
             Orders
           </TabsTrigger>
@@ -80,7 +79,7 @@ const ProfileManagement = ({
       <TabsContent value="favorites">
         <Feed results={favoriteProducts} session={session} removeUser={true} />
       </TabsContent>
-      {profileEmail === session?.user.email && (
+      {decodedURI === session?.user.email && (
         <TabsContent value="orders">
           <div className="mb-10">
             {session && session.user?.email === decodedURI && (

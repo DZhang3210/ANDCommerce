@@ -5,7 +5,7 @@ import React from "react";
 
 const CreatePage = () => {
   return (
-    <div className="container">
+    <div className="container mt-10">
       <div className="text-4xl flex gap-4 items-center">
         <span className="font-semibold">Create a product</span>
         <Pencil size={40} />
