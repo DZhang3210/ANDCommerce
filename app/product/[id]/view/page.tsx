@@ -96,7 +96,7 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
         </div>
       </div>
       {session && session?.user?.id === product?.owner?.id && (
-        <div className="mt-5 flex flex-col gap-1">
+        <div className="mt-5 flex flex-col gap-1 mb-10">
           <Button asChild variant={"outline"}>
             <Link
               href={`/product/${product.id}/edit`}

@@ -99,11 +99,9 @@ export function CheckoutForm({ product, userID }: CheckoutFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="mb-10">
       <PaymentElement />
-      <div className="mt-4">
-        <LinkAuthenticationElement />
-      </div>
+      <LinkAuthenticationElement />
       <Button className="mt-5 w-full">Submit Payment</Button>
     </form>
   );

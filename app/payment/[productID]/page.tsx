@@ -33,7 +33,7 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
   // Return the component with product and userID
   return (
     <div className="container mt-10">
-      <div className="mb-2 text-6xl flex gap-4 items-center">
+      <div className="mb-2 text-4xl sm:text-6xl flex gap-4 items-center">
         <div className="font-semibold">CheckOut</div>
         <ShoppingCart size={50} />
       </div>
@@ -59,7 +59,7 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
         {session ? (
           <CheckoutWrapper product={product} userID={session.user.id} />
         ) : (
-          <div>
+          <div className="mb-10">
             <div className="text-5xl font-semibold">Must Sign In First</div>
             <Button asChild className="mt-4">
               <Link href="/signup">Sign In</Link>

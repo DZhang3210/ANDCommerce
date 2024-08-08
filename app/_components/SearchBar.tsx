@@ -61,7 +61,7 @@ type TagFilterProps = {
 
 const TagFilter = ({ tags, chosenTags, setChosenTags }: TagFilterProps) => {
   return (
-    <div className="space-x-4 w-full">
+    <div className="space-y-2 w-full mb-5">
       {tags.map((tag, i) => (
         <TagButton
           key={i}
@@ -87,7 +87,7 @@ const TagButton = ({ tag, chosenTags, setChosenTags }: TagButtonProps) => {
     <button
       type="button"
       className={
-        "rounded-full border border-black transition py-2 px-5 " +
+        "rounded-full border border-black transition py-2 px-5 mr-2 " +
         (!add
           ? "bg-white text-mainTheme hover:bg-mainTheme hover:text-white"
           : "bg-mainTheme text-white hover:bg-white hover:text-mainTheme")
