@@ -28,6 +28,7 @@ const TagList = ({ tags, setTags }: TagListProps) => {
           <span>{tag}</span>
           {setTags && (
             <button
+              type="button"
               onClick={() => {
                 removeTag(tag);
               }}
