@@ -89,8 +89,8 @@ const TagButton = ({ tag, chosenTags, setChosenTags }: TagButtonProps) => {
       className={
         "rounded-full border border-black transition py-2 px-5 " +
         (!add
-          ? "bg-white text-black hover:bg-black hover:text-white"
-          : "bg-black text-white hover:bg-white hover:text-black")
+          ? "bg-white text-mainTheme hover:bg-mainTheme hover:text-white"
+          : "bg-mainTheme text-white hover:bg-white hover:text-mainTheme")
       }
       onClick={() => handleTag({ add, tag, setChosenTags })}
     >

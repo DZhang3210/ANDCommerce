@@ -5,7 +5,10 @@ import { deleteProduct } from "../_actions/ProductFormActions";
 
 const DeleteButton = ({ id }: { id: string }) => {
   return (
-    <Button onClick={() => deleteProduct({ id })} className="bg-destructive">
+    <Button
+      onClick={() => deleteProduct({ id })}
+      className="bg-destructive text-xl"
+    >
       Delete Me
     </Button>
   );

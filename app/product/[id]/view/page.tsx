@@ -60,7 +60,7 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
 
   return (
     <div className="container">
-      <div className="grid grid-cols-2 gap-12 mt-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-10">
         <div className="overflow-hidden w-full aspect-video">
           {product.productImage === "" ? (
             <div className="bg-black w-3/4 aspect-video"></div>
@@ -87,9 +87,9 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
             <TagList tags={tagList} />
           </div>
           <div className="text-xl">${product.pricePaidInCents / 100}</div>
-          <div className="text-xl text-gray-600 mt-10">{product.desc}</div>
+          <div className="text-2xl text-gray-600 mt-10">{product.desc}</div>
           <Button asChild>
-            <Link href={`/payment/${product.id}`} className="w-full">
+            <Link href={`/payment/${product.id}`} className="w-full text-xl">
               Buy Now
             </Link>
           </Button>
@@ -98,7 +98,10 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
       {session && session?.user?.id === product?.owner?.id && (
         <div className="mt-5 flex flex-col gap-1">
           <Button asChild variant={"outline"}>
-            <Link href={`/product/${product.id}/edit`} className="w-full">
+            <Link
+              href={`/product/${product.id}/edit`}
+              className="w-full text-xl mb-2"
+            >
               Edit?
             </Link>
           </Button>

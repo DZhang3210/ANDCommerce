@@ -115,7 +115,9 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
         )}
 
         <div className="px-3 py-2">
-          <div className="text-2xl line-clamp-2">{product.title}</div>
+          <div className="text-2xl line-clamp-2 font-semibold text-mainTheme">
+            {product.title}
+          </div>
           <div className="text-lg text-gray-500 line-clamp-1">
             {product.desc}
           </div>
@@ -148,7 +150,7 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
       <CardFooter className="space-x-2">
         {session?.user.id !== null && !isOwner && (
           <div className="flex justify-between w-full items-center pr-5">
-            <Button className="px-10 w-full" asChild>
+            <Button className="px-10 w-full bg-mainTheme" asChild>
               <Link href={`/payment/${id}`}>
                 Pay ${product.pricePaidInCents / 100}
               </Link>

@@ -29,7 +29,7 @@ const ProfileOrderTable = ({ orders }: ProfileOrderTableProps) => {
       <Table>
         <TableCaption>A list of all your orders</TableCaption>
         <TableHeader>
-          <TableRow>
+          <TableRow className="text-lg">
             <TableHead>ID</TableHead>
             <TableHead>Product Title</TableHead>
             <TableHead>Price</TableHead>
@@ -66,7 +66,7 @@ export const OrderRow = ({
   productName,
 }: OrderRowProps) => {
   return (
-    <TableRow>
+    <TableRow className="text-lg">
       <TableCell>{id}</TableCell>
       <TableCell>{productName}</TableCell>
       <TableCell>{pricePaidInCents}</TableCell>

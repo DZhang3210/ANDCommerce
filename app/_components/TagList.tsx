@@ -24,11 +24,15 @@ const TagList = ({ tags, setTags }: TagListProps) => {
   return (
     <div className="space-x-1">
       {Object.keys(tags).map((tag, i) => (
-        <Badge key={i} className="inline-flex items-center px-5 py-1">
+        <Badge
+          key={i}
+          className="inline-flex items-center px-5 py-1 text-md bg-mainTheme"
+        >
           <span>{tag}</span>
           {setTags && (
             <button
               type="button"
+              className=""
               onClick={() => {
                 removeTag(tag);
               }}

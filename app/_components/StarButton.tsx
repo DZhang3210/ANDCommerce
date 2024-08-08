@@ -35,7 +35,7 @@ const StarButton = ({ productID, defaultState }: StarButtonProps) => {
       disabled={isLoading} // Disable button when loading
       className={
         "absolute top-1 left-1 z-[5] transition " +
-        (star ? "text-yellow-300" : "text-black")
+        (star ? "text-yellow-300" : "text-mainTheme")
       }
     >
       <div>
