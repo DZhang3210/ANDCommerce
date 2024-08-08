@@ -25,7 +25,7 @@ const StatsPage = async () => {
     orderAggregate._sum.pricePaidInCents,
   ];
   return (
-    <div className="container grid grid-cols-2 gap-5">
+    <div className="container grid grid-cols-2 gap-5 mb-10">
       <StatsCard
         title="Total Users"
         desc="Number of users using site"

@@ -53,58 +53,74 @@ const ProductForm = ({
   };
 
   return (
-    <>
+    <div className="mb-10">
       <form action={action}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div>
-            <Label htmlFor="title">Title</Label>
-            <Input
-              type="text"
-              id="title"
-              name="title"
-              defaultValue={title || ""}
-              required
-            ></Input>
-            {error?.title && (
-              <div className="text-destructive">{error?.title}</div>
-            )}
-            <Label htmlFor="desc">Desc</Label>
-            <textarea
-              id="desc"
-              name="desc"
-              defaultValue={desc || ""}
-              rows={4}
-              required
-              className="block w-full"
-            ></textarea>
-            <Label htmlFor="price">Price In Cents</Label>
-            <Input
-              type="number"
-              id="price"
-              name="price"
-              defaultValue={pricePaidInCents || ""}
-              required
-            ></Input>
-            {error?.desc && (
-              <div className="text-destructive">{error?.desc}</div>
-            )}
-            <Label htmlFor="tags">Tags</Label>
-            <div className="flex gap-1">
+          <div className="space-y-6 order-2 md:order-1">
+            <div>
+              <Label htmlFor="title" className="text-lg">
+                Title
+              </Label>
               <Input
                 type="text"
-                placeholder="tags"
-                value={tag}
-                onChange={(e) => setTag(e.target.value)}
-              />
-
-              <Button variant="outline" type="button" onClick={addTag}>
-                Add Tag
-              </Button>
+                id="title"
+                name="title"
+                defaultValue={title || ""}
+                required
+              ></Input>
+              {error?.title && (
+                <div className="text-destructive">{error?.title}</div>
+              )}
             </div>
-            {error?.tags && (
-              <div className="text-destructive">{error?.tags}</div>
-            )}
-            <TagList tags={tags} setTags={setTags} />
+            <div>
+              <Label htmlFor="desc" className="text-lg">
+                Desc
+              </Label>
+              <textarea
+                id="desc"
+                name="desc"
+                defaultValue={desc || ""}
+                rows={4}
+                required
+                className="block w-full"
+              ></textarea>
+            </div>
+            <div>
+              <Label htmlFor="price" className="text-lg">
+                Price In Cents
+              </Label>
+              <Input
+                type="number"
+                id="price"
+                name="price"
+                defaultValue={pricePaidInCents || ""}
+                required
+              ></Input>
+              {error?.desc && (
+                <div className="text-destructive">{error?.desc}</div>
+              )}
+            </div>
+            <div>
+              <Label htmlFor="tags" className="text-lg">
+                Tags
+              </Label>
+              <div className="flex gap-1">
+                <Input
+                  type="text"
+                  placeholder="tags"
+                  value={tag}
+                  onChange={(e) => setTag(e.target.value)}
+                />
+
+                <Button variant="outline" type="button" onClick={addTag}>
+                  Add Tag
+                </Button>
+              </div>
+              {error?.tags && (
+                <div className="text-destructive">{error?.tags}</div>
+              )}
+              <TagList tags={tags} setTags={setTags} />
+            </div>
 
             {/* Hidden input to store the tags as a JSON string */}
             <input type="hidden" name="tags" value={JSON.stringify(tags)} />
@@ -114,7 +130,7 @@ const ProductForm = ({
               <input className="hidden" name="id" readOnly value={id}></input>
             )}
           </div>
-          <div className="w-full">
+          <div className="w-full order-1 md:order-2">
             <ImageUpload name="productImage" defaultValue={productImage} />
             {error?.productImage && (
               <div className="text-destructive">{error?.productImage}</div>
@@ -123,7 +139,7 @@ const ProductForm = ({
         </div>
         <SubmitButton />
       </form>
-    </>
+    </div>
   );
 };
 

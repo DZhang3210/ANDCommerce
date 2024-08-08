@@ -26,7 +26,7 @@ import TagList from "../TagList";
 const ProductCarousel = async () => {
   const products = await prisma.product.findMany({ take: 10 });
   return (
-    <div className="w-full flex justify-center my-20 px-20">
+    <div className="w-full flex justify-center my-20 px-16">
       <Carousel
         opts={{
           align: "start",

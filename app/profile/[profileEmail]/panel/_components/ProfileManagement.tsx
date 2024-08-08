@@ -61,14 +61,23 @@ const ProfileManagement = ({
   return (
     <Tabs defaultValue="products" className="w-full">
       <TabsList className="text-2xl">
-        <TabsTrigger value="products" className="text-4xl">
+        <TabsTrigger
+          value="products"
+          className="text-lg sm:text-2xl md:text-4xl"
+        >
           Products
         </TabsTrigger>
-        <TabsTrigger value="favorites" className="text-4xl">
+        <TabsTrigger
+          value="favorites"
+          className="text-lg sm:text-2xl md:text-4xl"
+        >
           Favorites
         </TabsTrigger>
         {decodedURI === session?.user.email && (
-          <TabsTrigger value="orders" className="text-4xl">
+          <TabsTrigger
+            value="orders"
+            className="text-lg sm:text-2xl md:text-4xl"
+          >
             Orders
           </TabsTrigger>
         )}

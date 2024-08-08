@@ -13,7 +13,7 @@ const EmailPage = () => {
         height={234}
         className="hidden lg:block px-2"
       />
-      <div className="flex flex-col items-start gap-2 px-2">
+      <div className="flex flex-col items-start gap-2 px-5">
         <div className="text-4xl max-w-sm font-semibold">
           Confirmation Email w/ Resend
         </div>
@@ -30,7 +30,7 @@ const EmailPage = () => {
         alt="resend-logo"
         width={386}
         height={234}
-        className="block lg:hidden px-2"
+        className="block lg:hidden px-5"
       />
     </div>
   );
