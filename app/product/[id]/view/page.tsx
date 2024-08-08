@@ -76,8 +76,8 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
             </div>
           )}
         </div>
-        <div className="flex flex-col items-start gap-1">
-          <div className="flex gap-1">
+        <div className="flex flex-col items-start gap-1 mb-10">
+          <div className="flex gap-1 pr-12">
             <div className="text-4xl uppercase font-bold">{product.title}</div>
             <div className="relative translate-y-[-3px]">
               <StarButton productID={product.id} defaultState={isFavorite} />
