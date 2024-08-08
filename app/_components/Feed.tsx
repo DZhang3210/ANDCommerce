@@ -14,6 +14,8 @@ import Image from "next/image";
 import { Session } from "next-auth";
 import { Tag } from "@prisma/client";
 import TagList from "./TagList";
+import { Star } from "lucide-react";
+import StarButton from "./StarButton";
 
 type ResultProp = {
   id: string;
@@ -37,6 +39,7 @@ type ExtendedSession = {
     image?: string | null;
     id: string;
     isAdmin: boolean;
+    favorites: ResultProp[]; // Add favorites to the session type
   };
   expires: string;
 } | null;
@@ -46,10 +49,8 @@ type FeedProps = {
   session: ExtendedSession | null;
   removeUser?: boolean;
 };
+
 const Feed = ({ results, session, removeUser }: FeedProps) => {
-  // console.log("result", results);
-  // console.log("session", session);
-  // console.log("HERE", session ? results[0].owner?.id : null);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-10">
       {results.map((result) => (
@@ -83,12 +84,20 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
     },
     {}
   );
+
   const isOwner = session?.user?.id === product.owner?.id;
+  const isFavorite = session?.user.favorites.some(
+    (fav) => fav.id === product.id
+  );
+
   return (
     <Card className="m-0 p-0 transition hover:scale-105 border border-transparent hover:border-black">
       <CardContent className="p-2">
         {product?.productImage ? (
-          <div className="w-full aspect-video overflow-hidden group border border-black">
+          <div className="relative w-full aspect-video overflow-hidden group border border-black">
+            {session && (
+              <StarButton productID={product?.id} defaultState={isFavorite} />
+            )}
             <Link href={`/product/${id}/view`}>
               <Image
                 src={product?.productImage}

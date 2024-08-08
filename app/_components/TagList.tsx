@@ -1,6 +1,8 @@
 import { Badge } from "@/components/ui/badge";
+import { authOptions } from "@/lib/authOptions";
 import { Tag } from "@prisma/client";
 import { X } from "lucide-react";
+import { getServerSession } from "next-auth";
 import React from "react";
 
 type Tags = {
@@ -11,7 +13,7 @@ type TagListProps = {
   setTags?: React.Dispatch<React.SetStateAction<Tags>>;
 };
 
-const TagList = ({ tags, setTags }: TagListProps) => {
+const TagList = async ({ tags, setTags }: TagListProps) => {
   const removeTag = (tagToRemove: string) => {
     if (setTags) {
       setTags((prevTags) => {

@@ -22,7 +22,7 @@ type NavProps = {
 
 const Nav = ({ session, isAdmin }: NavProps) => {
   console.log("Session", session);
-  console.log("isAdmin", isAdmin);
+  console.log("isAdmin", session);
   return (
     <div className="fixed top-0 left-0 right-0 h-[6rem] bg-[#3B3B46] flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
       <div className="flex items-center gap-5">

@@ -1,44 +1,32 @@
-import Image from "next/image";
+"use server";
+import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
-import Feed from "@/app/_components/Feed";
-import SearchBar from "@/app/_components/SearchBar";
 
-type SearchPageProps = {
-  params: {
-    keyword: string;
-  };
+type SearchProductsProps = {
+  keyword?: string | null;
 };
-
-export default async function SearchPage({
-  params: { keyword },
-}: SearchPageProps) {
-  let decodedKeyword =
-    decodeURIComponent(keyword) === "_ignore"
-      ? ""
-      : decodeURIComponent(keyword);
-
-  const [results, session, tags] = await Promise.all([
+export const SearchProducts = async ({ keyword = "" }: SearchProductsProps) => {
+  const [results, session] = await Promise.all([
     prisma.product.findMany({
       where: {
         OR: [
           {
             title: {
-              contains: decodedKeyword,
+              contains: decodeURIComponent(keyword || ""),
               mode: "insensitive", // Case-insensitive search
             },
           },
           {
             desc: {
-              contains: decodedKeyword,
+              contains: decodeURIComponent(keyword || ""),
               mode: "insensitive", // Case-insensitive search
             },
           },
           {
             owner: {
               name: {
-                contains: decodedKeyword,
+                contains: decodeURIComponent(keyword || ""),
                 mode: "insensitive", // Case-insensitive search
               },
             },
@@ -68,14 +56,6 @@ export default async function SearchPage({
       },
     }),
     getServerSession(authOptions),
-    prisma.tag.findMany(),
   ]);
-  console.log("SESSION", session);
-  return (
-    <div className="container mt-10">
-      <SearchBar kWord={decodeURIComponent(decodedKeyword)} tags={tags} />
-      <h1 className="text-4xl">Filter Products&nbsp;({results.length})</h1>
-      <Feed results={results} session={session} />
-    </div>
-  );
-}
+  return [results, session];
+};

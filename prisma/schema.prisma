@@ -24,11 +24,12 @@ model Product {
   pricePaidInCents Int      @default(1)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
-  owner            User?    @relation(fields: [ownerID], references: [id], onDelete: Cascade)
+  owner            User?    @relation(name: "ProductToUser", fields: [ownerID], references: [id], onDelete: Cascade)
   ownerID          String?
   orders           Order[]
   tags             Tag[]
   tagId            String?
+  favoritedBy      User[]   @relation(name: "Favorites")
 }
 
 model Tag {
@@ -57,12 +58,13 @@ model User {
   accounts      Account[]
   sessions      Session[]
   orders        Order[]
+  favorites     Product[]       @relation(name: "Favorites")
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Product   Product[]
+  Product   Product[] @relation(name: "ProductToUser")
 }
 
 model Account {

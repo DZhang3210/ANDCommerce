@@ -21,6 +21,7 @@ import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import TagList from "../TagList";
 
 const ProductCarousel = async () => {
   const products = await prisma.product.findMany({ take: 10 });
@@ -52,13 +53,19 @@ const CardComponent = ({ product }: { product: Product }) => {
     <Card className="border-transparent border-4 transition hover:scale-105">
       <div className="aspect-video overflow-hidden border-2 border-black">
         <Link href={`/product/${product.id}/view`}>
-          <Image
-            src={product?.productImage}
-            alt="profile-name"
-            width={1600}
-            height={900}
-            className="w-full h-auto transition hover:scale-105"
-          />
+          {product.productImage === "" ? (
+            <div className="bg-black w-full aspect-video"></div>
+          ) : (
+            <div className="w-3/4 aspect-video">
+              <Image
+                src={product.productImage}
+                alt="product-image"
+                height={900}
+                width={1600}
+                className="w-full h-auto"
+              />
+            </div>
+          )}
         </Link>
       </div>
       <CardHeader>
