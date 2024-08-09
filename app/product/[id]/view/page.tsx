@@ -195,7 +195,7 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
 
       {/* Recommendations Section */}
       <div className="text-lg sm:text-3xl md:text-4xl my-10 font-semibold flex gap-2 items-center">
-        <div>More Products By {session.user.name}</div>
+        <div>More Products By {product.owner.name}</div>
         {product && product?.owner && product?.owner?.image && (
           <Link href={`/profile/${product.owner.email}/panel`}>
             <div className="rounded-full overflow-hidden">
