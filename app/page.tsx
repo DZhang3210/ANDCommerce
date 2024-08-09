@@ -10,6 +10,8 @@ import ProductCarousel from "./_components/home/ProductCarousel";
 import EmailPage from "./_components/home/EmailPage";
 import PaymentPage from "./_components/home/PaymentPage";
 import AuthorizationPage from "./_components/home/AuthorizationPage";
+import Categories from "./_components/home/Categories";
+import Deals from "./_components/home/Deals";
 
 export default async function Home() {
   const results = await prisma.product.findMany({
@@ -42,6 +44,8 @@ export default async function Home() {
       <hr className="mb-10 h-[2px] border-black border-3" />
       <Feed results={results} session={session} /> */}
       <Hero />
+      <Categories />
+      <Deals />
       <ProductCarousel />
       <AuthorizationPage />
       <PaymentPage />

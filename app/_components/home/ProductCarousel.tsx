@@ -26,24 +26,27 @@ import TagList from "../TagList";
 const ProductCarousel = async () => {
   const products = await prisma.product.findMany({ take: 10 });
   return (
-    <div className="w-full flex justify-center my-20 px-16">
-      <Carousel
-        opts={{
-          align: "start",
-          loop: true,
-        }}
-        className="w-full max-w-7xl"
-      >
-        <CarouselContent>
-          {products.map((product, i) => (
-            <CarouselItem key={i} className="sm:basis-1/2 md:basis-1/3">
-              <CardComponent key={i} product={product} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="h-full w-[40px]" />
-        <CarouselNext className="h-full w-[40px]" />
-      </Carousel>
+    <div className="w-full flex flex-col gap-10 justify-center container">
+      <h1 className="text-4xl">Popular Products</h1>
+      <div className="flex justify-center">
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full max-w-7xl"
+        >
+          <CarouselContent>
+            {products.map((product, i) => (
+              <CarouselItem key={i} className="sm:basis-1/2 md:basis-1/3">
+                <CardComponent key={i} product={product} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="h-full w-[40px]" />
+          <CarouselNext className="h-full w-[40px]" />
+        </Carousel>
+      </div>
     </div>
   );
 };

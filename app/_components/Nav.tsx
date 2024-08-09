@@ -100,17 +100,17 @@ const Nav = ({ session, isAdmin }: NavProps) => {
                           </Link>
                         </Button>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Button
-                          onClick={() => signOut()}
-                          variant={"destructive"}
-                          className="w-full text-lg"
-                        >
-                          Log Out
-                        </Button>
-                      </DropdownMenuItem>
                     </div>
                   }
+                  <DropdownMenuItem>
+                    <Button
+                      onClick={() => signOut()}
+                      variant={"destructive"}
+                      className="w-full text-lg"
+                    >
+                      Log Out
+                    </Button>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -118,9 +118,6 @@ const Nav = ({ session, isAdmin }: NavProps) => {
             )}
           </div>
           <span className="flex-row gap-3 items-center hidden lg:flex">
-            <Button onClick={() => signOut()} className="py-6 text-xl">
-              Log Out
-            </Button>
             <Button asChild variant="outline" className="px-10 py-6">
               <Link href="/product/create" className="text-xl">
                 Create Product
