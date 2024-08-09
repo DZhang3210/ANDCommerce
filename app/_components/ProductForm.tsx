@@ -84,6 +84,9 @@ const ProductForm = ({
                 required
                 className="block w-full"
               ></textarea>
+              {error?.desc && (
+                <div className="text-destructive">{error?.desc}</div>
+              )}
             </div>
             <div>
               <Label htmlFor="price" className="text-lg">
@@ -96,8 +99,8 @@ const ProductForm = ({
                 defaultValue={pricePaidInCents || ""}
                 required
               ></Input>
-              {error?.desc && (
-                <div className="text-destructive">{error?.desc}</div>
+              {error?.price && (
+                <div className="text-destructive">{error?.price}</div>
               )}
             </div>
             <div>

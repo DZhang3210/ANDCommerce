@@ -1,9 +1,9 @@
 "use client";
 import { Tag } from "@prisma/client";
 import { Search } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import React, { useState } from "react";
 
 type SearchBarProps = {
   kWord?: string;
@@ -26,7 +26,7 @@ const SearchBar = ({ kWord, tags, defaultTags = [] }: SearchBarProps) => {
 
   return (
     <div>
-      <div className="flex w-full lg:w-1/2 my-6 text-xl items-center border rounded-full px-5 bg-white">
+      <div className="flex w-full my-6 text-xl items-center border rounded-full px-5 bg-white">
         <input
           type="text"
           placeholder="search.."
@@ -45,9 +45,11 @@ const SearchBar = ({ kWord, tags, defaultTags = [] }: SearchBarProps) => {
         </Link>
       </div>
       <TagFilter
+        keyword={keyword}
         tags={tags}
         chosenTags={chosenTags}
         setChosenTags={setChosenTags}
+        router={router} // Pass the router instance down
       />
     </div>
   );
@@ -55,19 +57,29 @@ const SearchBar = ({ kWord, tags, defaultTags = [] }: SearchBarProps) => {
 
 type TagFilterProps = {
   tags: Tag[];
+  keyword: string;
   chosenTags: string[];
   setChosenTags: React.Dispatch<React.SetStateAction<string[]>>;
+  router: ReturnType<typeof useRouter>; // Define the type for the router
 };
 
-const TagFilter = ({ tags, chosenTags, setChosenTags }: TagFilterProps) => {
+const TagFilter = ({
+  tags,
+  chosenTags,
+  keyword,
+  setChosenTags,
+  router,
+}: TagFilterProps) => {
   return (
     <div className="space-y-2 w-full mb-5">
       {tags.map((tag, i) => (
         <TagButton
           key={i}
+          keyword={keyword}
           tag={tag}
           chosenTags={chosenTags}
           setChosenTags={setChosenTags}
+          router={router} // Pass the router instance down
         />
       ))}
     </div>
@@ -77,10 +89,18 @@ const TagFilter = ({ tags, chosenTags, setChosenTags }: TagFilterProps) => {
 type TagButtonProps = {
   tag: Tag;
   chosenTags: string[];
+  keyword: string;
   setChosenTags: React.Dispatch<React.SetStateAction<string[]>>;
+  router: ReturnType<typeof useRouter>; // Define the type for the router
 };
 
-const TagButton = ({ tag, chosenTags, setChosenTags }: TagButtonProps) => {
+const TagButton = ({
+  tag,
+  chosenTags,
+  keyword,
+  setChosenTags,
+  router,
+}: TagButtonProps) => {
   const add = chosenTags.includes(tag.title);
 
   return (
@@ -89,10 +109,12 @@ const TagButton = ({ tag, chosenTags, setChosenTags }: TagButtonProps) => {
       className={
         "rounded-full border border-black transition py-2 px-5 mr-2 " +
         (!add
-          ? "bg-white text-mainTheme hover:bg-mainTheme hover:text-white"
-          : "bg-mainTheme text-white hover:bg-white hover:text-mainTheme")
+          ? "bg-white text-mainTheme hover:bg-black hover:text-white"
+          : "bg-black text-white hover:bg-white hover:text-mainTheme")
       }
-      onClick={() => handleTag({ add, tag, setChosenTags })}
+      onClick={() =>
+        handleTag({ add, tag, chosenTags, keyword, setChosenTags, router })
+      }
     >
       <h1>{tag.title}</h1>
     </button>
@@ -102,17 +124,37 @@ const TagButton = ({ tag, chosenTags, setChosenTags }: TagButtonProps) => {
 type handleTagProps = {
   add: boolean;
   tag: Tag;
+  keyword: string;
+  chosenTags: string[];
   setChosenTags: React.Dispatch<React.SetStateAction<string[]>>;
+  router: ReturnType<typeof useRouter>; // Add the router as a prop
 };
 
-const handleTag = ({ add, tag, setChosenTags }: handleTagProps) => {
-  setChosenTags((prevTags) => {
-    if (add) {
-      return prevTags.filter((t) => t !== tag.title);
-    } else {
-      return [...prevTags, tag.title];
-    }
-  });
+const handleTag = ({
+  add,
+  tag,
+  keyword,
+  chosenTags,
+  setChosenTags,
+  router,
+}: handleTagProps) => {
+  const newTags = add
+    ? chosenTags.filter((t) => t !== tag.title)
+    : [...chosenTags, tag.title];
+
+  // Set the new state
+  setChosenTags(newTags);
+
+  const slug = newTags.join("/");
+  console.log("keyword", keyword);
+
+  // Use searchKeyword that defaults to "_ignore" if keyword is empty
+  const searchKeyword = keyword === "" ? "_ignore" : keyword;
+  const d = `/search/${searchKeyword}/${slug}`;
+  console.log("PUSH ROUTER", d);
+
+  // Use searchKeyword in router.push
+  router.push(d);
 };
 
 export default SearchBar;

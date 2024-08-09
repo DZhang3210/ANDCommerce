@@ -30,6 +30,7 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
         title: true,
         desc: true,
         pricePaidInCents: true,
+        discountInPercent: true,
         productImage: true,
         owner: true,
         tags: {
@@ -44,7 +45,6 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
   ]);
 
   if (!product) notFound();
-
   const tagList: Record<string, boolean> = product.tags.reduce<Tags>(
     (acc, tag) => {
       acc[tag.title] = true; // Use the title as the key and set the value to true
@@ -63,7 +63,7 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-10">
         <div className="overflow-hidden w-full aspect-video">
           {product.productImage === "" ? (
-            <div className="bg-black w-3/4 aspect-video"></div>
+            <div className="bg-black w-full aspect-video"></div>
           ) : (
             <div className="w-full aspect-video">
               <Image
@@ -76,7 +76,7 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
             </div>
           )}
         </div>
-        <div className="flex flex-col items-start gap-1 mb-10">
+        <div className="flex flex-col justify-start items-start gap-1 mb-10 w-full">
           <div className="flex gap-1 pr-12">
             <div className="text-4xl uppercase font-bold">{product.title}</div>
             <div className="relative translate-y-[-3px]">
@@ -86,8 +86,29 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
           <div>
             <TagList tags={tagList} />
           </div>
-          <div className="text-xl">${product.pricePaidInCents / 100}</div>
-          <div className="text-2xl text-gray-600 mt-10">{product.desc}</div>
+          {product.discountInPercent !== 0 ? (
+            <div className="flex gap-1 text-xl">
+              <div className="line-through">
+                ${product.pricePaidInCents / 100}
+              </div>
+              =&gt;
+              <div className="text-blue-800">
+                $
+                {(
+                  (product.pricePaidInCents / 100) *
+                  (1 - product.discountInPercent / 100)
+                ).toFixed(2)}
+              </div>
+            </div>
+          ) : (
+            <div className="text-xl text-blue-800">
+              ${product.pricePaidInCents / 100}
+            </div>
+          )}
+
+          <div className="text-2xl text-gray-600 mt-10 max-w-full whitespace-normal overflow-hidden text-ellipsis">
+            {product.desc}
+          </div>
           <Button asChild>
             <Link href={`/payment/${product.id}`} className="w-full text-xl">
               Buy Now

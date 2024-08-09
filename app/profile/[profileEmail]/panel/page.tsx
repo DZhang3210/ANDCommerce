@@ -78,6 +78,7 @@ const ProfilePanel = async ({
             title: true,
             desc: true,
             pricePaidInCents: true,
+            discountInPercent: true,
             productImage: true,
             tags: true,
             owner: {
@@ -99,6 +100,7 @@ const ProfilePanel = async ({
         title: true,
         desc: true,
         pricePaidInCents: true,
+        discountInPercent: true,
         productImage: true,
         tags: true,
         owner: {

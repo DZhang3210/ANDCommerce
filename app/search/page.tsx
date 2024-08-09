@@ -13,6 +13,7 @@ export default async function BlankSearchPage() {
         title: true,
         desc: true,
         pricePaidInCents: true,
+        discountInPercent: true,
         productImage: true,
         tags: {
           select: {

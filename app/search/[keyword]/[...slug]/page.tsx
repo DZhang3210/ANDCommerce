@@ -67,6 +67,7 @@ export default async function SearchPage({
           title: true,
           desc: true,
           pricePaidInCents: true,
+          discountInPercent: true,
           productImage: true,
           tags: {
             select: {

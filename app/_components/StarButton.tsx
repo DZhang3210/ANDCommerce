@@ -34,12 +34,12 @@ const StarButton = ({ productID, defaultState }: StarButtonProps) => {
       onClick={handleToggleFavorite}
       disabled={isLoading} // Disable button when loading
       className={
-        "absolute top-1 left-1 z-[5] transition " +
+        "absolute top-1 left-1 z-[5] transition hover:bg-slate-300 p-2 rounded-full " +
         (star ? "text-yellow-300" : "text-mainTheme")
       }
     >
       <div>
-        <Star size={35} className="transition hover:scale-110" />
+        <Star size={35} className="" />
       </div>
     </button>
   );

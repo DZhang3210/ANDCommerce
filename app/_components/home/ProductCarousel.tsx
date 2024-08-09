@@ -22,11 +22,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import TagList from "../TagList";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import StarButton from "../StarButton";
 
 const ProductCarousel = async () => {
-  const products = await prisma.product.findMany({ take: 10 });
+  const [products] = await Promise.all([prisma.product.findMany({ take: 10 })]);
   return (
-    <div className="w-full flex flex-col gap-10 justify-center container">
+    <div className="w-[90%] flex flex-col gap-10 justify-center container">
       <h1 className="text-4xl">Popular Products</h1>
       <div className="flex justify-center">
         <Carousel
@@ -59,7 +62,7 @@ const CardComponent = ({ product }: { product: Product }) => {
           {product.productImage === "" ? (
             <div className="bg-black w-full aspect-video"></div>
           ) : (
-            <div className="w-full aspect-video">
+            <div className="relative w-full aspect-video overflow-hidden">
               <Image
                 src={product.productImage}
                 alt="product-image"
@@ -67,6 +70,11 @@ const CardComponent = ({ product }: { product: Product }) => {
                 width={1600}
                 className="w-full h-auto"
               />
+              {product.discountInPercent !== 0 && (
+                <div className="absolute bottom-3 left-2 bg-black/80 text-blue-300 rounded-full px-4 py-1">
+                  Save {product.discountInPercent}%
+                </div>
+              )}
             </div>
           )}
         </Link>

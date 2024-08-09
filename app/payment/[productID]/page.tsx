@@ -54,7 +54,9 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
             </div>
           )}
           <h1 className="text-3xl">{product.title}</h1>
-          <div className="text-lg">{product.desc}</div>
+          <div className="text-2xl text-gray-600 mt-10 max-w-full whitespace-normal overflow-hidden">
+            {product.desc}
+          </div>
         </div>
         {session ? (
           <CheckoutWrapper product={product} userID={session.user.id} />

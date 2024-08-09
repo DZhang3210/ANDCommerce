@@ -17,19 +17,28 @@ datasource db {
 }
 
 model Product {
-  id               String   @id @default(uuid())
-  title            String
-  desc             String
-  productImage     String   @default("")
-  pricePaidInCents Int      @default(1)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  owner            User?    @relation(name: "ProductToUser", fields: [ownerID], references: [id], onDelete: Cascade)
-  ownerID          String?
-  orders           Order[]
-  tags             Tag[]
-  tagId            String?
-  favoritedBy      User[]   @relation(name: "Favorites")
+  id                String         @id @default(uuid())
+  title             String
+  desc              String
+  productImage      String         @default("")
+  displayImages     DisplayImage[]
+  discountInPercent Int            @default(0)
+  pricePaidInCents  Int            @default(1)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  owner             User?          @relation(name: "ProductToUser", fields: [ownerID], references: [id], onDelete: Cascade)
+  ownerID           String?
+  orders            Order[]
+  tags              Tag[]
+  tagId             String?
+  favoritedBy       User[]         @relation(name: "Favorites")
+}
+
+model DisplayImage {
+  id        String  @id @default(uuid())
+  url       String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
 }
 
 model Tag {

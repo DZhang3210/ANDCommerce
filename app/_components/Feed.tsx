@@ -22,6 +22,7 @@ type ResultProp = {
   title: string;
   desc: string;
   pricePaidInCents: number;
+  discountInPercent: number;
   productImage: string;
   tags: Tag[];
   owner: {
@@ -107,6 +108,11 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
                 className="w-full h-auto transition group-hover:scale-110"
               />
             </Link>
+            {product.discountInPercent !== 0 && (
+              <div className="absolute bottom-1 left-2 bg-black/80 text-blue-300 rounded-full px-4 py-1">
+                Save {product.discountInPercent}%
+              </div>
+            )}
           </div>
         ) : (
           <Link href={`/product/${id}/view`}>
@@ -150,9 +156,26 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
       <CardFooter className="space-x-2">
         {session?.user.id !== null && !isOwner && (
           <div className="flex justify-between w-full items-center pr-5">
-            <Button className="px-10 w-full bg-mainTheme" asChild>
+            <Button className="px-10 w-full flex gap-2 bg-mainTheme" asChild>
               <Link href={`/payment/${id}`}>
-                Pay ${product.pricePaidInCents / 100}
+                Pay
+                {product.discountInPercent !== 0 ? (
+                  <div className="flex gap-1">
+                    <div className="line-through">
+                      ${product.pricePaidInCents / 100}
+                    </div>
+                    =&gt;
+                    <div>
+                      $
+                      {(
+                        (product.pricePaidInCents / 100) *
+                        (1 - product.discountInPercent / 100)
+                      ).toFixed(2)}
+                    </div>
+                  </div>
+                ) : (
+                  <div> ${product.pricePaidInCents / 100}</div>
+                )}
               </Link>
             </Button>
           </div>

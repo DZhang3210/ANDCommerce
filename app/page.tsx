@@ -12,6 +12,9 @@ import PaymentPage from "./_components/home/PaymentPage";
 import AuthorizationPage from "./_components/home/AuthorizationPage";
 import Categories from "./_components/home/Categories";
 import Deals from "./_components/home/Deals";
+import SearchHomePage from "./_components/home/SearchHomePage";
+import BrandsPage from "./_components/home/BrandsPage";
+import BlogPosts from "./_components/home/BlogPosts";
 
 export default async function Home() {
   const results = await prisma.product.findMany({
@@ -47,9 +50,8 @@ export default async function Home() {
       <Categories />
       <Deals />
       <ProductCarousel />
-      <AuthorizationPage />
-      <PaymentPage />
-      <EmailPage />
+      <BrandsPage />
+      <BlogPosts />
     </div>
   );
 }

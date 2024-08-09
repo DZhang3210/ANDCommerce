@@ -20,6 +20,7 @@ type ResultProp = {
   title: string;
   desc: string;
   pricePaidInCents: number;
+  discountInPercent: number;
   productImage: string;
   tags: Tag[];
   owner: {

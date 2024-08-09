@@ -38,7 +38,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <Provider session={session}>
           <Nav session={session} isAdmin={isAdmin} />
-          <div className="mt-24 overflow-auto min-h-[84vh]">{children}</div>
+          <div className="mt-24 min-h-[84vh]">{children}</div>
           <Footer />
         </Provider>
       </body>

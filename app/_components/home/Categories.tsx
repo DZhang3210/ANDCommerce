@@ -54,9 +54,8 @@ const Categories = () => {
   ];
 
   return (
-    <div className="container flex justify-center flex-col mb-40 mt-10">
-      <h1 className="text-4xl">Categories</h1>
-      <Carousel className="flex justify-center gap-20 py-10">
+    <div className="container flex justify-center flex-col">
+      <Carousel className="flex justify-center gap-20 py-5">
         <CarouselContent className="flex gap-5 py-5 px-10">
           {categories.map((item, i) => (
             <CategoryCard key={i} item={item} />
@@ -79,7 +78,7 @@ const CategoryCard = ({ item }: CategoryCardProps) => {
   return (
     <Link
       href={`/search/${item.title}`}
-      className="px-10 border-2 rounded flex justify-center transition hover:border-blue-500 hover:scale-105"
+      className="px-10 border-2 rounded-3xl flex justify-center transition hover:border-blue-500 hover:scale-105 border-gray-500"
     >
       <div className="text-xl py-5 flex items-center gap-4 justify-center">
         <div className="rounded-full p-2 bg-white">{item.logo}</div>
