@@ -74,7 +74,7 @@ const DealsCard = ({ item }: DealsCardProps) => {
           alt="image"
           width={830}
           height={950}
-          className="absolute w-1/2 right-1 top-0 md:top-20 transition group-hover:scale-110"
+          className="absolute w-1/2 right-1 top-20 md:top-20 transition group-hover:scale-110"
         />
       </div>
     </Link>

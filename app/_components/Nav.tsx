@@ -24,7 +24,7 @@ const Nav = ({ session, isAdmin }: NavProps) => {
   console.log("Session", session);
   console.log("isAdmin", session);
   return (
-    <div className="fixed top-0 left-0 right-0 h-[6rem] bg-[#1F2937] flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
+    <div className="sticky top-0 left-0 right-0 h-[6rem] bg-[#1F2937] flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
       <div className="flex items-center gap-2">
         <Link href="/" className="block">
           <div className="flex items-center gap-3 font-semibold group">
@@ -67,9 +67,6 @@ const Nav = ({ session, isAdmin }: NavProps) => {
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="z-[110]">
-                  <DropdownMenuLabel className="text-xl">
-                    My Account
-                  </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <Link

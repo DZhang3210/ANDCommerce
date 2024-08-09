@@ -101,7 +101,7 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
     false;
 
   return (
-    <div className="container mt-[10rem]">
+    <div className="container mt-10">
       {/* Product Details */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div className="overflow-hidden w-full aspect-video">

@@ -6,7 +6,7 @@ import SearchHomePage from "./SearchHomePage";
 
 const Hero = () => {
   return (
-    <div className="relative h-[30rem] w-full overflow-hidden flex justify-center items-center flex-col gap-5 z-[50] bg-gradient-to-b from-[#add8e6] to-[#4682b4]">
+    <div className="relative py-10 w-full overflow-hidden flex justify-center items-center flex-col gap-5 z-[50] bg-gradient-to-b from-[#add8e6] to-[#4682b4]">
       {/* <div className="absolute top-0 left-[100px] text-[20rem] rotate-[40deg] z-[0] text-white">
         &
       </div>
