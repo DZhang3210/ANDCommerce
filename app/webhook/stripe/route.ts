@@ -43,12 +43,12 @@ export async function POST(req: NextRequest) {
       return;
     }
     console.log("THREE");
-    // await resend.emails.send({
-    //   from: `Support <${process.env.SENDER_EMAIL}>`,
-    //   to: email,
-    //   subject: "Order Confirmation",
-    //   react: ConfirmEmail({ order, product, user }),
-    // });
+    await resend.emails.send({
+      from: `Support <${process.env.SENDER_EMAIL}>`,
+      to: email,
+      subject: "Order Confirmation",
+      react: ConfirmEmail({ order, product, user }),
+    });
     console.log("FOUR");
   }
   return new NextResponse();

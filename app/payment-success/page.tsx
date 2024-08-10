@@ -11,8 +11,8 @@ const PaymentSuccess = () => {
 
   return (
     <>
-      <div className="container space-y-5">
-        <div>You payed ${Number(amount) / 100}</div>
+      <div className="container space-y-5 mt-10">
+        <div className="text-6xl">You payed ${Number(amount) / 100}</div>
 
         <Button>
           <Link href="/">Return to Home</Link>

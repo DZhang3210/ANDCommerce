@@ -86,12 +86,12 @@ export const addProduct = async (prevState: unknown, formData: FormData) => {
     price: Number(unvalidatedData.price),
   };
   const resend = new Resend(process.env.RESEND_API_KEY as string);
-  // await resend.emails.send({
-  //   from: `Support <${process.env.SENDER_EMAIL}>`,
-  //   to: user?.email,
-  //   subject: "Order Confirmation",
-  //   react: ProductCreationEmail({ product: emailProduct }),
-  // });
+  await resend.emails.send({
+    from: `Support <${process.env.SENDER_EMAIL}>`,
+    to: user?.email,
+    subject: "Order Confirmation",
+    react: ProductCreationEmail({ product: emailProduct }),
+  });
 
   redirect("/");
 };
