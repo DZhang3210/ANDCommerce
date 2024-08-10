@@ -32,7 +32,7 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
 
   // Return the component with product and userID
   let truncatedPrice =
-    Math.trunc(product.pricePaidInCents * (1 - product.discountInPercent)) /
+    Math.trunc(product.pricePaidInCents * (100 - product.discountInPercent)) /
     100;
 
   return (
