@@ -9,7 +9,7 @@ const Deals = () => {
       desc: "From $40.00",
       image: "/headphone-deal.png",
       background: "#E9D7C7",
-      link: "/search",
+      link: "/search/_ignore/tech",
       linkText: "Browse Deals",
     },
     {
@@ -17,7 +17,7 @@ const Deals = () => {
       desc: "From $40.00",
       image: "/phone-deal.png",
       background: "#9AC5E2",
-      link: "/search",
+      link: "/search/_ignore/tech",
       linkText: "Shop Cellphone",
     },
     {
@@ -25,7 +25,7 @@ const Deals = () => {
       desc: "From $40.00",
       image: "/external-battery.png",
       background: "#000000",
-      link: "/search",
+      link: "/search/_ignore/tech",
       linkText: "Shop Now",
       whiteText: true,
     },

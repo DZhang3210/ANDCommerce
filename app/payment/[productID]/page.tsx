@@ -31,6 +31,11 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
   // Fetch the user ID from the database using the session's email
 
   // Return the component with product and userID
+  let truncatedPrice =
+    Math.trunc(
+      product.pricePaidInCents * (1 - product.discountInPercent / 100) * 100
+    ) / 100;
+
   return (
     <div className="container mt-10">
       <div className="mb-2 text-4xl sm:text-6xl flex gap-4 items-center">
@@ -53,10 +58,11 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
               />
             </div>
           )}
-          <h1 className="text-3xl">{product.title}</h1>
+          <h1 className="text-3xl font-bold">{product.title}</h1>
           <div className="text-2xl text-gray-600 mt-10 max-w-full whitespace-normal overflow-hidden">
             {product.desc}
           </div>
+          <div className="text-3xl mt-5 font-semibold">${truncatedPrice}</div>
         </div>
         {session ? (
           <CheckoutWrapper product={product} userID={session.user.id} />

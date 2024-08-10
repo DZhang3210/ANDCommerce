@@ -63,7 +63,7 @@ const ImageUpload = ({ name, icon, defaultValue }: ImageUploadProps) => {
             />
           </div>
         )}
-        {!isUploading && !url && (
+        {!(isUploading || isImageLoading) && !url && (
           <div className="w-full flex aspect-video overflow-hidden border-4 border-black"></div>
         )}
       </div>

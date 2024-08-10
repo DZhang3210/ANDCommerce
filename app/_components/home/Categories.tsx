@@ -32,25 +32,25 @@ import React, { ReactNode } from "react";
 
 const Categories = () => {
   const categories = [
-    { title: "Electronics", logo: <Smartphone /> },
-    { title: "Fashion", logo: <Shirt /> },
-    { title: "Home", logo: <Home /> },
-    { title: "Beauty", logo: <Heart /> },
-    { title: "Sports", logo: <Bike /> },
-    { title: "Toys & Games", logo: <Gamepad /> },
-    { title: "Automotive", logo: <Car /> },
-    { title: "Books", logo: <Book /> },
-    { title: "Music", logo: <Music /> },
-    { title: "Groceries", logo: <ShoppingCart /> },
-    { title: "Jewelry", logo: <Watch /> },
-    { title: "Office", logo: <Briefcase /> },
-    { title: "Pet", logo: <PawPrint /> },
-    { title: "Baby", logo: <Baby /> },
-    { title: "Fitness", logo: <Dumbbell /> },
-    { title: "Travel", logo: <Globe /> },
-    { title: "Furniture", logo: <Armchair /> },
-    { title: "Photography", logo: <Camera /> },
-    { title: "Gardening", logo: <Flower2 /> },
+    { title: "Electronics", logo: <Smartphone />, link: "tech" },
+    { title: "Fashion", logo: <Shirt />, link: "fashion" },
+    { title: "Home", logo: <Home />, link: "home" },
+    { title: "Beauty", logo: <Heart />, link: "beauty" },
+    { title: "Sports", logo: <Bike />, link: "sports" },
+    { title: "Toys & Games", logo: <Gamepad />, link: "games" },
+    { title: "Automotive", logo: <Car />, link: "" },
+    { title: "Books", logo: <Book />, link: "" },
+    { title: "Music", logo: <Music />, link: "" },
+    { title: "Groceries", logo: <ShoppingCart />, link: "" },
+    { title: "Jewelry", logo: <Watch />, link: "" },
+    { title: "Office", logo: <Briefcase />, link: "" },
+    { title: "Pet", logo: <PawPrint />, link: "pet" },
+    { title: "Baby", logo: <Baby />, link: "" },
+    { title: "Fitness", logo: <Dumbbell />, link: "sports" },
+    { title: "Travel", logo: <Globe />, link: "" },
+    { title: "Furniture", logo: <Armchair />, link: "" },
+    { title: "Photography", logo: <Camera />, link: "" },
+    { title: "Gardening", logo: <Flower2 />, link: "gardening" },
   ];
 
   return (
@@ -72,12 +72,13 @@ type CategoryCardProps = {
   item: {
     title: string;
     logo: ReactNode;
+    link: string;
   };
 };
 const CategoryCard = ({ item }: CategoryCardProps) => {
   return (
     <Link
-      href={`/search/${item.title}`}
+      href={`/search/_ignore/${item.link}`}
       className="px-10 border-2 rounded-3xl flex justify-center transition hover:border-blue-500 hover:scale-105 border-gray-500"
     >
       <div className="text-xl py-5 flex items-center gap-4 justify-center">
