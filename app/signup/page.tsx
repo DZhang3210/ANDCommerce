@@ -30,7 +30,7 @@ const page = () => {
           <hr className="flex-grow h-[2px] border-t border-gray-300" />
         </div>
         <Button
-          onClick={() => signIn("github")}
+          onClick={() => signIn("~")}
           className="flex gap-2 px-20 transition hover:bg-white hover:text-black border-2 hover:border-black"
         >
           <GithubIcon />
