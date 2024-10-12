@@ -1,9 +1,7 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { NextRequest } from "next/server";
 import uniqid from "uniqid";
 
 export async function POST(req) {
-  console.log("HELLO");
   const data = await req.formData();
   const file = data.get("file");
 

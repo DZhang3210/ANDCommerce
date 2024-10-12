@@ -25,7 +25,6 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
   let mustLogin = false;
   const session = await getServerSession(authOptions);
   if (!session) mustLogin = true; // Return a 404 if session is not found
-  console.log("SESSION", session);
 
   //   const userID = session.user.id;
   // Fetch the user ID from the database using the session's email
@@ -37,9 +36,9 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
 
   return (
     <div className="container mt-10">
-      <div className="mb-2 text-4xl sm:text-6xl flex gap-4 items-center">
-        <div className="font-semibold">CheckOut</div>
-        <ShoppingCart size={50} />
+      <div className="mb-2 text-3xl sm:text-4xl flex gap-4 items-center">
+        <div className="font-semibold">Checkout</div>
+        <ShoppingCart size={40} />
       </div>
       <hr className="mb-10 h-[2px] border-black border-3" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-2 px-10">
@@ -57,11 +56,11 @@ const PurchasePage = async ({ params: { productID } }: PurchasePageProps) => {
               />
             </div>
           )}
-          <h1 className="text-3xl font-bold">{product.title}</h1>
-          <div className="text-2xl text-gray-600 mt-10 max-w-full whitespace-normal overflow-hidden">
+          <h1 className="text-2xl font-bold">{product.title}</h1>
+          <div className="text-xl indent-2">${truncatedPrice / 100}</div>
+          <div className="text-base text-gray-700 max-w-full whitespace-normal overflow-hidden">
             {product.desc}
           </div>
-          <div className="text-3xl mt-5 font-semibold">${truncatedPrice}</div>
         </div>
         {session ? (
           <CheckoutWrapper product={product} userID={session.user.id} />

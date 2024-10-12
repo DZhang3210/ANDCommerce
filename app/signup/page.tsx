@@ -11,27 +11,27 @@ const page = () => {
     <div className="container flex justify-center items-center">
       <div className="flex flex-col gap-5 justify-start py-10 px-10 rounded-xl border-4 bg-white">
         <div>
-          <h1 className="text-5xl mt-6 mb-2 flex gap-4 items-center">
+          <h1 className="text-3xl mt-6 mb-2 flex gap-2 items-center font-semibold">
             <span>Sign in</span>
-            <KeySquare size={45} />
+            <KeySquare size={35} />
           </h1>
           <hr className="mb-5 h-[2px] border-black border-3" />
         </div>
         <Button
           onClick={() => signIn("google")}
-          className="flex gap-2 px-20 transition hover:bg-white hover:text-black border-2 hover:border-black"
+          className="flex gap-2 px-20 transition hover:bg-white hover:text-black border-2 hover:border-black rounded-xl py-4"
         >
           <SearchCheck />
           <span className="text-xl">Sign in With Google</span>
         </Button>
         <div className="flex items-center">
           <hr className="flex-grow h-[2px] border-t border-gray-300" />
-          <span className="mx-2 text-xl">OR</span>
+          <span className="mx-2 text-xl font-semibold">OR</span>
           <hr className="flex-grow h-[2px] border-t border-gray-300" />
         </div>
         <Button
           onClick={() => signIn("github")}
-          className="flex gap-2 px-20 transition hover:bg-white hover:text-black border-2 hover:border-black"
+          className="flex gap-2 px-20 transition hover:bg-white hover:text-black border-2 hover:border-black rounded-xl py-4"
         >
           <GithubIcon />
           <span className="text-xl">Sign in With Github</span>

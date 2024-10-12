@@ -5,7 +5,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import {
-  Activity,
   Armchair,
   Baby,
   Bike,
@@ -19,7 +18,6 @@ import {
   Globe,
   Heart,
   Home,
-  LucideProps,
   Music,
   PawPrint,
   Shirt,
@@ -79,10 +77,10 @@ const CategoryCard = ({ item }: CategoryCardProps) => {
   return (
     <Link
       href={`/search/_ignore/${item.link}`}
-      className="px-10 border-2 rounded-3xl flex justify-center transition hover:border-blue-500 hover:scale-105 border-gray-500"
+      className="px-5 border-2 rounded-full flex justify-center transition hover:border-blue-500 hover:scale-105 border-gray-500 bg-gray-100"
     >
-      <div className="text-xl py-5 flex items-center gap-4 justify-center">
-        <div className="rounded-full p-2 bg-white">{item.logo}</div>
+      <div className="text-lg py-2 flex items-center gap-1 justify-center">
+        <div className="rounded-full p-2 ">{item.logo}</div>
         <div>{item.title}</div>
       </div>
     </Link>

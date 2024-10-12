@@ -1,6 +1,8 @@
 import DeleteButton from "@/app/_components/DeleteButton";
+import ImageCarousel from "@/app/_components/ImageCarousel";
 import StarButton from "@/app/_components/StarButton";
 import TagList from "@/app/_components/TagList";
+import ColorPicker from "@/components/color-picker";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { authOptions } from "@/lib/authOptions";
 import prisma from "@/lib/db";
 import { Product } from "@prisma/client";
@@ -95,34 +98,19 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
     },
     {}
   );
-
   const isFavorite =
     session?.user?.favorites?.some((fav: Product) => fav.id === product.id) ||
     false;
 
   return (
-    <div className="container mt-10">
+    <div className="container mt-10 ">
       {/* Product Details */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div className="overflow-hidden w-full aspect-video">
-          {product.productImage === "" ? (
-            <div className="bg-black w-full aspect-video"></div>
-          ) : (
-            <div className="w-full aspect-video">
-              <Image
-                src={product.productImage}
-                alt="product-image"
-                height={900}
-                width={1600}
-                className="w-full h-auto"
-              />
-            </div>
-          )}
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+        <ImageCarousel image={product.productImage} />
         <div className="relative flex flex-col justify-start items-start gap-1 mb-10 w-full">
           <StarButton productID={product.id} defaultState={isFavorite} />
           <div className="flex gap-1 pr-12">
-            <div className="text-4xl uppercase font-bold">{product.title}</div>
+            <div className="text-3xl uppercase font-bold">{product.title}</div>
           </div>
           <div>
             <TagList tags={tagList} />
@@ -147,18 +135,40 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
               </div>
             </Link>
           )}
+          {session && session?.user?.id === product?.owner?.id && (
+            <div className="flex gap-1">
+              <Button asChild variant={"outline"} className="rounded-xl">
+                <Link
+                  href={`/product/${product.id}/edit`}
+                  className="w-full text-sm "
+                >
+                  Edit?
+                </Link>
+              </Button>
+              <DeleteButton id={product.id} />
+            </div>
+          )}
+          <Separator className="w-full h-[2px] bg-gray-400" />
           {product.discountInPercent !== 0 ? (
-            <div className="flex gap-1 text-xl">
-              <div className="line-through">
-                ${product.pricePaidInCents / 100}
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-1 text-xl items-center">
+                <div className="text-red-600 px-2 py-1 rounded-full text-xl border-2 border-red-300">
+                  -{product.discountInPercent}%
+                </div>
+
+                <div className="text-2xl">
+                  $
+                  {(
+                    (product.pricePaidInCents / 100) *
+                    (1 - product.discountInPercent / 100)
+                  ).toFixed(2)}
+                </div>
               </div>
-              =&gt;
-              <div className="text-blue-800">
-                $
-                {(
-                  (product.pricePaidInCents / 100) *
-                  (1 - product.discountInPercent / 100)
-                ).toFixed(2)}
+              <div className="text-sm">
+                List Price:{" "}
+                <span className="line-through">
+                  ${product.pricePaidInCents / 100}
+                </span>
               </div>
             </div>
           ) : (
@@ -167,31 +177,19 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
             </div>
           )}
 
-          <div className="text-2xl text-gray-600 mt-10 max-w-full whitespace-normal overflow-hidden text-ellipsis">
+          <ColorPicker />
+          {/* Owner Information */}
+
+          <div className="text-lg text-gray-800 mt-5 w-5/6 whitespace-normal overflow-hidden text-ellipsis">
             {product.desc}
           </div>
           <Button asChild>
-            <Link href={`/payment/${product.id}`} className="w-full text-xl">
+            <Link href={`/payment/${product.id}`} className="w-1/2 text-xl">
               Buy Now
             </Link>
           </Button>
         </div>
       </div>
-
-      {/* Owner Information */}
-      {session && session?.user?.id === product?.owner?.id && (
-        <div className="mt-5 flex flex-col gap-1 mb-10">
-          <Button asChild variant={"outline"}>
-            <Link
-              href={`/product/${product.id}/edit`}
-              className="w-full text-xl mb-2"
-            >
-              Edit?
-            </Link>
-          </Button>
-          <DeleteButton id={product.id} />
-        </div>
-      )}
 
       {/* Recommendations Section */}
       <div className="text-lg sm:text-3xl md:text-4xl my-10 font-semibold flex gap-2 items-center">
@@ -225,7 +223,7 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 py-10 gap-5">
           {recommendations.length > 0 ? (
             recommendations.map((item, i) => (
-              <CardComponent key={i} product={item} />
+              <CardComponent key={i} product={item as Product} />
             ))
           ) : (
             <div className="text-3xl whitespace-nowrap">
@@ -238,10 +236,10 @@ const ViewProductPage = async ({ params: { id } }: ViewProductPageProps) => {
   );
 };
 
-const CardComponent = ({ product }: { product: ProductCardProps }) => {
+const CardComponent = ({ product }: { product: Product }) => {
   return (
-    <Card className="border-transparent border-4 transition hover:scale-105">
-      <div className="aspect-video overflow-hidden border-2 border-black">
+    <Card className="border-transparent transition hover:scale-[101%] border-2 border-gray-400 cursor-pointer">
+      <div className="aspect-video border-2">
         <Link href={`/product/${product.id}/view`}>
           {product.productImage === "" ? (
             <div className="bg-black w-full aspect-video"></div>
@@ -265,14 +263,17 @@ const CardComponent = ({ product }: { product: ProductCardProps }) => {
       </div>
       <CardHeader>
         <CardTitle>
-          <div className="line-clamp-1">{product?.title}</div>
+          <div className="line-clamp-2 text-lg">{product?.title}</div>
         </CardTitle>
-        <CardDescription className="line-clamp-1">
+        <CardDescription className="line-clamp-3">
           {product?.desc}
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button asChild className="px-10 py-6 text-xl">
+        <Button
+          asChild
+          className="text-sm w-full rounded-3xl bg-yellow-300 text-black hover:bg-yellow-400 transition"
+        >
           <Link href={`/product/${product?.id}/view`}>View Product</Link>
         </Button>
       </CardFooter>

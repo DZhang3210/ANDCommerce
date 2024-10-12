@@ -1,6 +1,5 @@
 "use server";
 
-import { getSession } from "next-auth/react";
 import prisma from "@/lib/db"; // Adjust the path to your Prisma client
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";

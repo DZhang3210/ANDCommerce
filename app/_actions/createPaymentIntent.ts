@@ -1,5 +1,4 @@
 "use server";
-import { NextRequest, NextResponse } from "next/server";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -14,7 +13,6 @@ export async function createPaymentIntent({
   productID,
   userID,
 }: createPaymentIntentProps) {
-  console.log("amount", amount);
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
@@ -25,7 +23,7 @@ export async function createPaymentIntent({
 
     return { clientSecret: paymentIntent.client_secret };
   } catch (error) {
-    console.log(`Internal Server Error:${error}`);
+    // console.log(`Internal Server Error:${error}`);
     return {
       error: `Internal Server Error ${error}`,
       status: 500,

@@ -1,8 +1,7 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileOrderTable from "./ProfileOrdersTable";
-import { Order, Product, Tag } from "@prisma/client";
-import { Session } from "next-auth";
+import { Tag } from "@prisma/client";
 import Feed from "@/app/_components/Feed";
 
 type OrderType = {
@@ -58,26 +57,25 @@ const ProfileManagement = ({
   products,
   favoriteProducts,
 }: ProfileManagementProps) => {
-  //   console.log("profileEmail", profileEmail);
   return (
     <Tabs defaultValue="products" className="w-full">
       <TabsList className="text-2xl">
         <TabsTrigger
           value="products"
-          className="text-lg sm:text-2xl md:text-4xl"
+          className="text-lg sm:text-2xl md:text-3xl rounded-xl"
         >
           Products
         </TabsTrigger>
         <TabsTrigger
           value="favorites"
-          className="text-lg sm:text-2xl md:text-4xl"
+          className="text-lg sm:text-2xl md:text-3xl rounded-xl"
         >
           Favorites
         </TabsTrigger>
         {decodedURI === session?.user.email && (
           <TabsTrigger
             value="orders"
-            className="text-lg sm:text-2xl md:text-4xl"
+            className="text-lg sm:text-2xl md:text-3xl rounded-xl"
           >
             Orders
           </TabsTrigger>

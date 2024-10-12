@@ -1,9 +1,17 @@
-import Image from "next/image";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import SearchBar from "../_components/SearchBar";
 import Feed from "../_components/Feed";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default async function BlankSearchPage() {
   const [results, session, tags] = await Promise.all([
@@ -39,6 +47,24 @@ export default async function BlankSearchPage() {
       <SearchBar tags={tags} />
       <h1 className="text-4xl">Products</h1>
       <Feed results={results} session={session} />
+      <Pagination className="my-10">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#" className="text-xl">
+              1
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 }

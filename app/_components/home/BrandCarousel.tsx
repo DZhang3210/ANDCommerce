@@ -1,11 +1,7 @@
-"use client";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./BrandCarousel.css";
 
 const BrandCarousel = () => {
-  const [carouselProgress, setCarouselProgress] = useState(0);
-
   return (
     <div className="logo-container flex flex-col items-center justify-center w-full h-[10rem] gap-10 mt-10 ">
       <div className="logos w-[90vw]">

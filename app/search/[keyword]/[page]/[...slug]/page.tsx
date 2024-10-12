@@ -5,32 +5,35 @@ import Feed from "@/app/_components/Feed";
 import SearchBar from "@/app/_components/SearchBar";
 import {
   Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
   PaginationNext,
+  PaginationEllipsis,
+  PaginationLink,
   PaginationPrevious,
+  PaginationContent,
+  PaginationItem,
 } from "@/components/ui/pagination";
 
 type SearchPageProps = {
   params: {
     keyword: string;
+    page: string;
     slug: string[];
   };
 };
 
 export default async function SearchPage({
-  params: { keyword, slug },
+  params: { keyword, page, slug },
 }: SearchPageProps) {
   let decodedKeyword =
     decodeURIComponent(keyword) === "_ignore"
       ? ""
       : decodeURIComponent(keyword);
   const decodedSlug = slug.map((tag) => decodeURIComponent(tag).toLowerCase());
+  const currentPage = parseInt(page, 10) || 1;
+  const itemsPerPage = 10;
 
   try {
-    const [results, session, tags] = await Promise.all([
+    const [results, session, tags, totalCount] = await Promise.all([
       prisma.product.findMany({
         where: {
           AND: [
@@ -39,20 +42,20 @@ export default async function SearchPage({
                 {
                   title: {
                     contains: decodedKeyword,
-                    mode: "insensitive", // Case-insensitive search
+                    mode: "insensitive",
                   },
                 },
                 {
                   desc: {
                     contains: decodedKeyword,
-                    mode: "insensitive", // Case-insensitive search
+                    mode: "insensitive",
                   },
                 },
                 {
                   owner: {
                     name: {
                       contains: decodedKeyword,
-                      mode: "insensitive", // Case-insensitive search
+                      mode: "insensitive",
                     },
                   },
                 },
@@ -63,7 +66,7 @@ export default async function SearchPage({
                 some: {
                   title: {
                     in: decodedSlug,
-                    mode: "insensitive", // Case-insensitive search
+                    mode: "insensitive",
                   },
                 },
               },
@@ -92,14 +95,54 @@ export default async function SearchPage({
             },
           },
         },
+        skip: (currentPage - 1) * itemsPerPage,
+        take: itemsPerPage,
       }),
       getServerSession(authOptions),
       prisma.tag.findMany(),
+      prisma.product.count({
+        where: {
+          AND: [
+            {
+              OR: [
+                {
+                  title: {
+                    contains: decodedKeyword,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  desc: {
+                    contains: decodedKeyword,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  owner: {
+                    name: {
+                      contains: decodedKeyword,
+                      mode: "insensitive",
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              tags: {
+                some: {
+                  title: {
+                    in: decodedSlug,
+                    mode: "insensitive",
+                  },
+                },
+              },
+            },
+          ],
+        },
+      }),
     ]);
-    const filteredResults = results.filter((product) => {
-      const productTags = product.tags.map((tag) => tag.title.toLowerCase());
-      return decodedSlug.every((tag) => productTags.includes(tag));
-    });
+
+    const totalPages = Math.ceil(totalCount / itemsPerPage);
 
     return (
       <div className="container mt-10">
@@ -108,10 +151,8 @@ export default async function SearchPage({
           tags={tags}
           defaultTags={decodedSlug}
         />
-        <h1 className="text-4xl">
-          Filter Products&nbsp;({filteredResults.length})
-        </h1>
-        <Feed results={filteredResults} session={session} />
+        <h1 className="text-4xl">Filter Products&nbsp;({totalCount})</h1>
+        <Feed results={results} session={session} />
         <Pagination className="my-10">
           <PaginationContent>
             <PaginationItem>

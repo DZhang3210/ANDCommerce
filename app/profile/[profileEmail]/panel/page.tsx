@@ -1,7 +1,5 @@
-import Feed from "@/app/_components/Feed";
 import prisma from "@/lib/db";
 import React from "react";
-import ProfileOrderTable from "./_components/ProfileOrdersTable";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import Image from "next/image";
@@ -125,14 +123,14 @@ const ProfilePanel = async ({
 
   return (
     <div className="container mt-10">
-      <div className="text-6xl flex gap-4 items-center">
+      <div className="text-4xl flex gap-1 items-center">
         <span className="font-semibold">Profile</span>
-        <User size={50} />
+        <User size={40} />
       </div>
       <hr className="mb-10 h-[2px] border-black border-3" />
       <div className="flex flex-col md:flex-row md:gap-10 mb-10">
         {userWithOrders.image && (
-          <div className="rounded-full overflow-hidden aspect-square w-[300px] md:mb-10">
+          <div className="rounded-full overflow-hidden aspect-square w-[150px] md:mb-10">
             <Image
               src={userWithOrders.image}
               alt="user-profile"
@@ -141,7 +139,7 @@ const ProfilePanel = async ({
             />
           </div>
         )}
-        <div className="text-4xl">
+        <div className="text-4xl flex flex-col gap-1 items-start">
           <div className="mt-5 md:mt-20 font-semibold">
             {userWithOrders.name}
           </div>

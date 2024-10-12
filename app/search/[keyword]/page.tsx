@@ -4,6 +4,15 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import Feed from "@/app/_components/Feed";
 import SearchBar from "@/app/_components/SearchBar";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 type SearchPageProps = {
   params: {
@@ -67,16 +76,34 @@ export default async function SearchPage({
           },
         },
       },
+      take: 20,
     }),
     getServerSession(authOptions),
     prisma.tag.findMany(),
   ]);
-  console.log("SESSION", session);
   return (
     <div className="container mt-10">
       <SearchBar kWord={decodeURIComponent(decodedKeyword)} tags={tags} />
       <h1 className="text-4xl">Filter Products&nbsp;({results.length})</h1>
       <Feed results={results} session={session} />
+      <Pagination className="my-10">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#" className="text-xl">
+              1
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 }

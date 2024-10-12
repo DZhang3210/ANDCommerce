@@ -1,20 +1,10 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import React from "react";
-import DeleteButton from "./DeleteButton";
 import Link from "next/link";
 import Image from "next/image";
-import { Session } from "next-auth";
 import { Tag } from "@prisma/client";
 import TagList from "./TagList";
-import { Star } from "lucide-react";
 import StarButton from "./StarButton";
 
 type ResultProp = {
@@ -53,7 +43,7 @@ type FeedProps = {
 
 const Feed = ({ results, session, removeUser }: FeedProps) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 my-10">
       {results.map((result) => (
         <BlogCard
           key={result.id}
@@ -92,7 +82,7 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
   );
 
   return (
-    <Card className="m-0 p-0 transition hover:scale-105 border border-transparent hover:border-black">
+    <Card className="m-0 p-0 transition hover:scale-[101%] border border-transparent hover:border-black cursor-pointer">
       <CardContent className="p-2">
         {product?.productImage ? (
           <div className="relative w-full aspect-video overflow-hidden group border border-black">
@@ -120,22 +110,40 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
           </Link>
         )}
 
-        <div className="px-3 py-2">
-          <div className="text-2xl line-clamp-2 font-semibold text-mainTheme">
+        <div className="px-3 ">
+          <div className="text-xl line-clamp-2 font-semibold text-mainTheme">
             {product.title}
           </div>
-          <div className="text-lg text-gray-500 line-clamp-1">
-            {product.desc}
-          </div>
           <TagList tags={tags} />
+          <div className="my-2">
+            {product.discountInPercent !== 0 ? (
+              <div className="flex gap-1">
+                <div className="line-through">
+                  ${product.pricePaidInCents / 100}
+                </div>
+                =&gt;
+                <div>
+                  $
+                  {(
+                    (product.pricePaidInCents / 100) *
+                    (1 - product.discountInPercent / 100)
+                  ).toFixed(2)}
+                </div>
+              </div>
+            ) : (
+              <div className="text-xl font-semibold">
+                ${product.pricePaidInCents / 100}
+              </div>
+            )}
+          </div>
           {!removeUser && product?.owner?.image && (
             <>
               <Link
                 href={`/profile/${product?.owner?.email}/panel`}
                 className="group"
               >
-                <div className="flex gap-2 items-center my-2">
-                  <div className="rounded-full overflow-hidden">
+                <div className="flex gap-1 items-center my-2">
+                  <div className="rounded-full overflow-hidden h-8 w-8">
                     <Image
                       src={product?.owner?.image}
                       alt={`${product?.owner?.name} Image`}
@@ -143,40 +151,27 @@ const BlogCard = ({ id, product, removeUser, session }: BlogCardProps) => {
                       height={35}
                     ></Image>
                   </div>
-                  <div className="text-lg group-hover:underline line-clamp-1">
+                  <div className="text-sm group-hover:underline line-clamp-1">
                     {product?.owner?.name}
                   </div>
                 </div>
               </Link>
             </>
           )}
+          <div className="text-base text-gray-500 line-clamp-3">
+            {product.desc}
+          </div>
         </div>
       </CardContent>
 
       <CardFooter className="space-x-2">
         {session?.user.id !== null && !isOwner && (
           <div className="flex justify-between w-full items-center pr-5">
-            <Button className="px-10 w-full flex gap-2 bg-mainTheme" asChild>
-              <Link href={`/payment/${id}`}>
-                Pay
-                {product.discountInPercent !== 0 ? (
-                  <div className="flex gap-1">
-                    <div className="line-through">
-                      ${product.pricePaidInCents / 100}
-                    </div>
-                    =&gt;
-                    <div>
-                      $
-                      {(
-                        (product.pricePaidInCents / 100) *
-                        (1 - product.discountInPercent / 100)
-                      ).toFixed(2)}
-                    </div>
-                  </div>
-                ) : (
-                  <div> ${product.pricePaidInCents / 100}</div>
-                )}
-              </Link>
+            <Button
+              className="px-10 w-full flex gap-2 rounded-3xl bg-yellow-400 text-black hover:bg-yellow-500"
+              asChild
+            >
+              <Link href={`/payment/${id}`}>Add to cart</Link>
             </Button>
           </div>
         )}

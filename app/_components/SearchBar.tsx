@@ -41,7 +41,7 @@ const SearchBar = ({ kWord, tags, defaultTags = [] }: SearchBarProps) => {
           }/${chosenTags.join("/")}`}
           className="hidden md:inline-block"
         >
-          <Search size={40} />
+          <Search size={30} />
         </Link>
       </div>
       <TagFilter
@@ -146,12 +146,10 @@ const handleTag = ({
   setChosenTags(newTags);
 
   const slug = newTags.join("/");
-  console.log("keyword", keyword);
 
   // Use searchKeyword that defaults to "_ignore" if keyword is empty
   const searchKeyword = keyword === "" ? "_ignore" : keyword;
   const d = `/search/${searchKeyword}/${slug}`;
-  console.log("PUSH ROUTER", d);
 
   // Use searchKeyword in router.push
   router.push(d);

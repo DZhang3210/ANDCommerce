@@ -1,9 +1,7 @@
 "use client";
 import { createPaymentIntent } from "@/app/_actions/createPaymentIntent";
 import { Button } from "@/components/ui/button";
-import convertToSubcurrency from "@/lib/convertToSubcurrency";
 import {
-  Elements,
   LinkAuthenticationElement,
   PaymentElement,
   useElements,
@@ -53,7 +51,6 @@ export function CheckoutForm({ product, userID }: CheckoutFormProps) {
           amount: product.pricePaidInCents,
         })
       )?.clientSecret;
-      console.log(clientSecret);
       setClientSecret(clientSecret);
     };
     createClientSecret();

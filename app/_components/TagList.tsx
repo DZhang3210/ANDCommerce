@@ -26,7 +26,7 @@ const TagList = ({ tags, setTags }: TagListProps) => {
       {Object.keys(tags).map((tag, i) => (
         <Badge
           key={i}
-          className="inline-flex items-center px-5 py-1 text-md bg-mainTheme"
+          className="inline-flex items-center px-3 py-1 text-xs bg-mainTheme"
         >
           <span>{tag}</span>
           {setTags && (

@@ -4,14 +4,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import prisma from "@/lib/db";
 import { Ampersand } from "lucide-react";
 import { Session } from "next-auth";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -21,8 +19,6 @@ type NavProps = {
 };
 
 const Nav = ({ session, isAdmin }: NavProps) => {
-  console.log("Session", session);
-  console.log("isAdmin", session);
   return (
     <div className="sticky top-0 left-0 right-0 h-[6rem] bg-[#1F2937] flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
       <div className="flex items-center gap-2">

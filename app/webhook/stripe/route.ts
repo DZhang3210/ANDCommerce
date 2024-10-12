@@ -12,14 +12,10 @@ export async function POST(req: NextRequest) {
     req.headers.get("stripe-signature") as string,
     process.env.STRIPE_WEBHOOK_SECRET as string
   );
-  console.log("ONE");
   if (event.type === "charge.succeeded") {
     const charge = event.data.object;
-    // console.log("CHARGE", charge);
     const email = charge.billing_details.email;
-    console.log("EMAIL", email);
     const pricePaidInCents = charge.amount;
-    console.log("TWO");
     if (!email) {
       return new NextResponse();
     }
@@ -42,14 +38,12 @@ export async function POST(req: NextRequest) {
     if (!product || !user || !order) {
       return;
     }
-    console.log("THREE");
     await resend.emails.send({
       from: `Support <${process.env.SENDER_EMAIL}>`,
       to: email,
       subject: "Order Confirmation",
       react: ConfirmEmail({ order, product, user }),
     });
-    console.log("FOUR");
   }
   return new NextResponse();
 }

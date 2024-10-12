@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { FormEvent, useEffect, useState, useTransition } from "react";
+import React, { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { addProduct, editProduct } from "../_actions/ProductFormActions";
 import ImageUpload from "./ImageUpload";
@@ -72,6 +72,45 @@ const ProductForm = ({
                 <div className="text-destructive">{error?.title}</div>
               )}
             </div>
+            <div className="grid grid-cols-2 gap-5">
+              <div>
+                <Label htmlFor="tags" className="text-lg">
+                  Tags
+                </Label>
+                <div className="flex gap-1">
+                  <Input
+                    type="text"
+                    placeholder="tags"
+                    value={tag}
+                    onChange={(e) => setTag(e.target.value)}
+                  />
+
+                  <Button variant="outline" type="button" onClick={addTag}>
+                    Add Tag
+                  </Button>
+                </div>
+                {error?.tags && (
+                  <div className="text-destructive">{error?.tags}</div>
+                )}
+                <TagList tags={tags} setTags={setTags} />
+              </div>
+              <div>
+                <Label htmlFor="price" className="text-lg">
+                  Price In Cents
+                </Label>
+                <Input
+                  type="number"
+                  id="price"
+                  name="price"
+                  defaultValue={pricePaidInCents || ""}
+                  className="w-full"
+                  required
+                />
+                {error?.price && (
+                  <div className="text-destructive">{error?.price}</div>
+                )}
+              </div>
+            </div>
             <div>
               <Label htmlFor="desc" className="text-lg">
                 Desc
@@ -82,47 +121,11 @@ const ProductForm = ({
                 defaultValue={desc || ""}
                 rows={4}
                 required
-                className="block w-full"
-              ></textarea>
+                className="block w-full indent-2"
+              />
               {error?.desc && (
                 <div className="text-destructive">{error?.desc}</div>
               )}
-            </div>
-            <div>
-              <Label htmlFor="price" className="text-lg">
-                Price In Cents
-              </Label>
-              <Input
-                type="number"
-                id="price"
-                name="price"
-                defaultValue={pricePaidInCents || ""}
-                required
-              ></Input>
-              {error?.price && (
-                <div className="text-destructive">{error?.price}</div>
-              )}
-            </div>
-            <div>
-              <Label htmlFor="tags" className="text-lg">
-                Tags
-              </Label>
-              <div className="flex gap-1">
-                <Input
-                  type="text"
-                  placeholder="tags"
-                  value={tag}
-                  onChange={(e) => setTag(e.target.value)}
-                />
-
-                <Button variant="outline" type="button" onClick={addTag}>
-                  Add Tag
-                </Button>
-              </div>
-              {error?.tags && (
-                <div className="text-destructive">{error?.tags}</div>
-              )}
-              <TagList tags={tags} setTags={setTags} />
             </div>
 
             {/* Hidden input to store the tags as a JSON string */}

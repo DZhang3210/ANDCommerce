@@ -7,7 +7,7 @@ const DeleteButton = ({ id }: { id: string }) => {
   return (
     <Button
       onClick={() => deleteProduct({ id })}
-      className="bg-destructive text-xl"
+      className="bg-destructive text-sm rounded-xl"
     >
       Delete Me
     </Button>

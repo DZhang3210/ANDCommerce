@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -15,16 +14,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
 import prisma from "@/lib/db";
 import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import TagList from "../TagList";
-import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
-import StarButton from "../StarButton";
 
 const ProductCarousel = async () => {
   const [products] = await Promise.all([prisma.product.findMany({ take: 10 })]);
@@ -41,7 +35,10 @@ const ProductCarousel = async () => {
         >
           <CarouselContent>
             {products.map((product, i) => (
-              <CarouselItem key={i} className="sm:basis-1/2 md:basis-1/3">
+              <CarouselItem
+                key={i}
+                className="xs:basis-1/2 sm:basis-1/3 md:basis-1/4"
+              >
                 <CardComponent key={i} product={product} />
               </CarouselItem>
             ))}
@@ -56,8 +53,8 @@ const ProductCarousel = async () => {
 
 const CardComponent = ({ product }: { product: Product }) => {
   return (
-    <Card className="border-transparent border-4 transition hover:scale-105">
-      <div className="aspect-video overflow-hidden border-2 border-black">
+    <Card className="border-transparent transition hover:scale-[101%] border-2 border-gray-400 cursor-pointer">
+      <div className="aspect-video border-2">
         <Link href={`/product/${product.id}/view`}>
           {product.productImage === "" ? (
             <div className="bg-black w-full aspect-video"></div>
@@ -81,14 +78,17 @@ const CardComponent = ({ product }: { product: Product }) => {
       </div>
       <CardHeader>
         <CardTitle>
-          <div className="line-clamp-1">{product?.title}</div>
+          <div className="line-clamp-2 text-lg">{product?.title}</div>
         </CardTitle>
-        <CardDescription className="line-clamp-1">
+        <CardDescription className="line-clamp-3">
           {product?.desc}
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button asChild className="px-10 py-6 text-xl">
+        <Button
+          asChild
+          className="text-sm w-full rounded-3xl bg-yellow-300 text-black hover:bg-yellow-400 transition"
+        >
           <Link href={`/product/${product?.id}/view`}>View Product</Link>
         </Button>
       </CardFooter>

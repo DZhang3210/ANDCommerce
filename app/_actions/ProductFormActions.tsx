@@ -6,9 +6,8 @@ import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { notFound, redirect } from "next/navigation";
-import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { SafeParseError, z } from "zod";
+import { z } from "zod";
 
 const getSchema = z.object({
   title: z

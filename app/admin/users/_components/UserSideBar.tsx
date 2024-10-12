@@ -7,7 +7,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { MenubarTrigger } from "@radix-ui/react-menubar";
 import { EllipsisVertical } from "lucide-react";
 import React from "react";
 import DeleteButton from "./DeleteButton";

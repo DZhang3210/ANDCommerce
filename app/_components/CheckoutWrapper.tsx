@@ -1,10 +1,8 @@
 "use client";
-import convertToSubcurrency from "@/lib/convertToSubcurrency";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
 import { CheckoutForm } from "./CheckoutForm";
-import { useSession } from "next-auth/react";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string
 );

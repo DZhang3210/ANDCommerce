@@ -19,7 +19,7 @@ const StarButton = ({ productID, defaultState }: StarButtonProps) => {
     setIsLoading(true); // Set loading to true
     try {
       setStar((prev) => !prev);
-      const newState = await toggleFavorite(productID);
+      await toggleFavorite(productID);
     } catch (error) {
       console.error("Failed to toggle favorite:", error);
     } finally {
@@ -34,12 +34,12 @@ const StarButton = ({ productID, defaultState }: StarButtonProps) => {
       onClick={handleToggleFavorite}
       disabled={isLoading} // Disable button when loading
       className={
-        "absolute top-0 right-0 z-[5] transition hover:bg-slate-300 p-2 rounded-full " +
+        "absolute top-0 right-0 z-[5] transition hover:bg-slate-300/50 p-2 rounded-full " +
         (star ? "text-yellow-300" : "text-mainTheme")
       }
     >
       <div>
-        <Star size={35} className="" />
+        <Star size={25} className="" />
       </div>
     </button>
   );
