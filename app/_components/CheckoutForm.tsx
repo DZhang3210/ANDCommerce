@@ -84,7 +84,7 @@ export function CheckoutForm({ product, userID }: CheckoutFormProps) {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `http://www.localhost:3000/payment-success?amount=${product.pricePaidInCents}`,
+        return_url: `${process.env.REDIRECT_URL}/payment-success?amount=${product.pricePaidInCents}`,
       },
     });
 
