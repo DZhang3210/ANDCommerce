@@ -30,13 +30,8 @@ const page = () => {
           <hr className="flex-grow h-[2px] border-t border-gray-300" />
         </div>
         <Button
-<<<<<<< HEAD
           onClick={() => signIn("github")}
           className="flex gap-2 px-20 transition hover:bg-white hover:text-black border-2 hover:border-black rounded-xl py-4"
-=======
-          onClick={() => signIn("~")}
-          className="flex gap-2 px-20 transition hover:bg-white hover:text-black border-2 hover:border-black"
->>>>>>> 6fc7a68809a467e7ca66c4e52ba1fa4c1e84400d
         >
           <GithubIcon />
           <span className="text-xl">Sign in With Github</span>
