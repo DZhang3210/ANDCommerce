@@ -42,6 +42,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-email": "^2.1.6",
+    "react-icons": "^5.4.0",
     "resend": "^3.5.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",

@@ -4,16 +4,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import prisma from "@/lib/db";
-import { Ampersand } from "lucide-react";
 import { Session } from "next-auth";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { TbMoodCrazyHappyFilled } from "react-icons/tb";
 
 type NavProps = {
   session?: Session | null;
@@ -24,19 +22,17 @@ const Nav = ({ session, isAdmin }: NavProps) => {
   console.log("Session", session);
   console.log("isAdmin", session);
   return (
-    <div className="sticky top-0 left-0 right-0 h-[6rem] bg-[#1F2937] flex gap-10 items-center text-3xl justify-between px-10 z-[100] py-2">
+    <div className="sticky top-0 left-0 right-0 h-[6rem] bg-[#1F2937] flex gap-10 items-center text-4xl justify-between px-10 z-[100] py-2">
       <div className="flex items-center gap-2">
         <Link href="/" className="block">
           <div className="flex items-center gap-3 font-semibold group">
-            <Ampersand
-              size={55}
-              className="transition group group-hover:scale-105 origin-center text-blue-100"
-            />
+            <TbMoodCrazyHappyFilled size={55} className="text-blue-100" />
+
             <div className="hidden md:block text-gray-200">
               {/* <span className="text-white text-4xl font-bold group-hover:text-blue-800 transition">
                 AND
               </span> */}
-              Commerce
+              Woot!
             </div>
           </div>
         </Link>
